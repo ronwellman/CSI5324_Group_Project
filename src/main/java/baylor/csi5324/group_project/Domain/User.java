@@ -1,4 +1,4 @@
-package baylor.csi5324.group_project.Model;
+package baylor.csi5324.group_project.Domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "id", "email" }) })
+@Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "email"})})
 public class User implements Serializable {
     @Id
     @Column(name = "id", nullable = false)

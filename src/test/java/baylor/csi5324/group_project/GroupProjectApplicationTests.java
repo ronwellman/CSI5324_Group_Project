@@ -1,8 +1,7 @@
 package baylor.csi5324.group_project;
 
-import baylor.csi5324.group_project.Model.User;
+import baylor.csi5324.group_project.Domain.User;
 import baylor.csi5324.group_project.Repository.UserRepository;
-
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
