@@ -1,6 +1,5 @@
-package baylor.csi5324.group_project;
+package baylor.csi5324.group_project.Domain;
 
-import baylor.csi5324.group_project.Domain.User;
 import baylor.csi5324.group_project.Repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,14 +14,10 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class GroupProjectApplicationTests {
+public class UserTests {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Test
-    void contextLoads() {
-    }
 
     @Test
     void createNewUser() {
@@ -45,7 +40,5 @@ class GroupProjectApplicationTests {
         assertEquals(saved, userById.get());
         assertTrue(userByEmail.isPresent());
         assertEquals(saved, userByEmail.get());
-
     }
-
 }
