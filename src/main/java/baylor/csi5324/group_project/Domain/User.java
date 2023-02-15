@@ -16,13 +16,11 @@ import java.io.Serializable;
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "email"})})
 public class User implements Serializable {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "first_name")
     private String firstName;
-    @Column(name = "last_name")
     private String lastName;
 
     private String street;
@@ -32,7 +30,7 @@ public class User implements Serializable {
     private String zip;
 
     @Email(message = "valid email required")
-    @Column(name = "email", nullable = false)
+    @Column(nullable = false)
     private String email;
     private String phone;
 
