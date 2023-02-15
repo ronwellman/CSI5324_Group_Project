@@ -2,14 +2,16 @@ package baylor.csi5324.group_project;
 
 import baylor.csi5324.group_project.Model.User;
 import baylor.csi5324.group_project.Repository.UserRepository;
+
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.awt.desktop.OpenFilesEvent;
 import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -39,10 +41,10 @@ class GroupProjectApplicationTests {
         Optional<User> userById = userRepository.findById(user.getId());
         Optional<User> userByEmail = userRepository.findUserByEmail(user.getEmail());
 
-        assert(userById.isPresent());
-        assert(saved.equals(userById.get()));
-        assert(userByEmail.isPresent());
-        assert(saved.equals((userByEmail.get())));
+        assertTrue(userById.isPresent());
+        assertEquals(saved, userById.get());
+        assertTrue(userByEmail.isPresent());
+        assertEquals(saved, userByEmail.get());
 
     }
 
