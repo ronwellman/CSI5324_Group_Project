@@ -25,6 +25,17 @@ public class FreelancePost implements Serializable {
     private String description;
 
     @NotNull
+    private Boolean active;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    @NotNull
     private CompensationType compensationType;
 
     @NotNull

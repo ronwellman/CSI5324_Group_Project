@@ -40,6 +40,7 @@ public class FreelancePostingTests {
         FreelancePost post = new FreelancePost();
         post.setListingTitle("Landscaping");
         post.setDescription("I do lawn maintenance as long as there are no plastic pink flamingos in the way.");
+        post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
         post.setCompensationAmt(30F);
