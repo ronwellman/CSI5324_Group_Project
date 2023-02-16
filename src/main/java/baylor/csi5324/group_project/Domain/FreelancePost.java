@@ -47,10 +47,7 @@ public class FreelancePost implements Serializable {
 
         FreelancePost that = (FreelancePost) o;
 
-        if (!id.equals(that.id)) return false;
-        if (!listingTitle.equals(that.listingTitle)) return false;
-        if (compensationType != that.compensationType) return false;
-        return (compensationAmt.equals(that.compensationAmt));
+        return id.equals(that.id);
     }
 
     @Override
