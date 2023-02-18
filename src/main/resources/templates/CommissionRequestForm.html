@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Definitely Not Fiverr</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+  </head>
+
+  <body>
+
+    <form method="POST" th:action="@{/commissions}" th:object="${commission}">
+      <h1>Post a commission request!</h1>
+
+      <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+      </div>
+
+      <h3>Post a Commission</h3>
+      <label for="listingTitle">Listing Title: </label>
+      <input type="text" th:field="*{customerName}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('customerName')}"
+            th:errors="*{customerName}">Name Error</span>
+      <br/>
+
+      <label for="description">Description: </label>
+      <input type="text" th:field="*{customerStreet}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('customerStreet')}"
+            th:errors="*{customerStreet}">Street Error</span>
+      <br/>
+
+      <label for="deadline">Commission Deadline: </label>
+      <input type="text" th:field="*{customerCity}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('customerCity')}"
+            th:errors="*{customerCity}">City Error</span>
+      <br/>
+
+      <label for="budget">Commission Budget: </label>
+      <input type="text" th:field="*{customerState}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('customerState')}"
+            th:errors="*{customerState}">State Error</span>
+      <br/>
+
+      <input type="submit" value="Post Commission Request"/>
+    </form>
+  </body>
+</html>
+
+
+
