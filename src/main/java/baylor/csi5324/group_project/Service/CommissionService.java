@@ -6,7 +6,7 @@ import baylor.csi5324.group_project.Domain.Commission;
 
 public class CommissionService {
 
-    public Commission addCommission(Long id, String listingTitle, String description, LocalDate deadline, float budget){
+    public Commission addCommission(Long id, String listingTitle, String description, LocalDate deadline, Float budget){
         Commission commission = new Commission(id, listingTitle, description, deadline, budget);
         return commission;
     }
@@ -15,7 +15,7 @@ public class CommissionService {
         String updatedListingTitle = commission.getListingTitle();
         String updatedListingDescription = commission.getDescription();
         LocalDate updatedListingDeadline = commission.getDeadline();
-        float updatedListingBudget = commission.getBudget();
+        Float updatedListingBudget = commission.getBudget();
 
         commission.setListingTitle(updatedListingTitle);
         commission.setDescription(updatedListingDescription);

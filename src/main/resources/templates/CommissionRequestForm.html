@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
   <head>
-    <title>Definitely Not Fiverr</title>
+    <title>Commissions</title>
     <link rel="stylesheet" th:href="@{/styles.css}" />
   </head>
 
   <body>
 
     <form method="POST" th:action="@{/commissions}" th:object="${commission}">
-      <h1>Post a commission request!</h1>
+      <h1>Post a Commission Request</h1>
 
       <div th:if="${#fields.hasErrors()}">
         <span class="validationError">
@@ -17,33 +17,33 @@
         </span>
       </div>
 
-      <h3>Post a Commission</h3>
+      <h3>Provide the following information:</h3>
       <label for="listingTitle">Listing Title: </label>
-      <input type="text" th:field="*{customerName}"/>
+      <input type="text" th:field="*{listingTitle}"/>
       <span class="validationError"
-            th:if="${#fields.hasErrors('customerName')}"
-            th:errors="*{customerName}">Name Error</span>
+            th:if="${#fields.hasErrors('listingTitle')}"
+            th:errors="*{listingTitle}">Title Error</span>
       <br/>
 
       <label for="description">Description: </label>
-      <input type="text" th:field="*{customerStreet}"/>
+      <input type="text" th:field="*{description}"/>
       <span class="validationError"
-            th:if="${#fields.hasErrors('customerStreet')}"
-            th:errors="*{customerStreet}">Street Error</span>
+            th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}">Description Error</span>
       <br/>
 
       <label for="deadline">Commission Deadline: </label>
-      <input type="text" th:field="*{customerCity}"/>
+      <input type="date" th:field="*{deadline}"/>
       <span class="validationError"
-            th:if="${#fields.hasErrors('customerCity')}"
-            th:errors="*{customerCity}">City Error</span>
+            th:if="${#fields.hasErrors('deadline')}"
+            th:errors="*{deadline}">Deadline Error</span>
       <br/>
 
       <label for="budget">Commission Budget: </label>
-      <input type="text" th:field="*{customerState}"/>
+      <input type="number" step="0.01" th:field="*{budget}"/>
       <span class="validationError"
-            th:if="${#fields.hasErrors('customerState')}"
-            th:errors="*{customerState}">State Error</span>
+            th:if="${#fields.hasErrors('deadline')}"
+            th:errors="*{deadline}">Budget Error</span>
       <br/>
 
       <input type="submit" value="Post Commission Request"/>

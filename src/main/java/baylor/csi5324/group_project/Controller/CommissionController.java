@@ -9,13 +9,14 @@ import java.util.Optional;
 import jakarta.validation.*;
 import org.springframework.validation.Errors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 
 @Controller
@@ -26,18 +27,19 @@ public class CommissionController {
     private CommissionRepository commissionRepository;
     private CommissionService commissionService;
 
+    @Autowired
     public CommissionController(CommissionRepository commissionRepository){
         this.commissionRepository = commissionRepository;
     }
 
-    @GetMapping("/commission")
-    public Optional<Commission> getCommission(Long id){
-        return commissionRepository.findCommissionById(id);
+    @ModelAttribute(name = "commission")
+    public Commission commission() {
+        return new Commission();
     }
 
     @GetMapping("/request-service")
-    public Commission addCommission(Long id, String listingTitle, String description, LocalDate deadline, float budget){
-        return commissionService.addCommission(id, listingTitle, description, deadline, budget);
+    public String CommissionRequestForm() {
+        return "commissionRequestForm";
     }
 
     @PostMapping
@@ -50,8 +52,13 @@ public class CommissionController {
         commissionRepository.save(commission);
         sessionStatus.setComplete();
 
-        return "redirect:/";
+        return "redirect:/commissions/request-service";
     }
+
+    // @GetMapping("/commission")
+    // public Optional<Commission> getCommission(Long id){
+    //     return commissionRepository.findCommissionById(id);
+    // }
 
 
 }

@@ -22,7 +22,7 @@ public class Commission implements Serializable {
     private String listingTitle;
     private String description;
     private LocalDate deadline;
-    private float budget;
+    private Float budget;
 
     // Getters
     public String getListingTitle() {
@@ -37,7 +37,7 @@ public class Commission implements Serializable {
         return deadline;
     }
 
-    public float getBudget(){
+    public Float getBudget(){
         return budget;
     }
 
@@ -54,7 +54,7 @@ public class Commission implements Serializable {
         this.deadline = listingDeadline;
     }
 
-    public void setBudget(float listingBudget){
+    public void setBudget(Float listingBudget){
         this.budget = listingBudget;
     }
 
