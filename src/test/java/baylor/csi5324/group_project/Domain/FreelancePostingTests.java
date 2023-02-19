@@ -1,8 +1,8 @@
 package baylor.csi5324.group_project.Domain;
 
 
-import baylor.csi5324.group_project.Repository.FreelancePostRepository;
 import baylor.csi5324.group_project.Repository.UserRepository;
+import baylor.csi5324.group_project.Service.FreelancePostService;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class FreelancePostingTests {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private FreelancePostRepository freelanceRepository;
+    private FreelancePostService freelancePostService;
 
     @Test
     @Order(2)
@@ -45,12 +45,12 @@ public class FreelancePostingTests {
         post.setCompensationType(CompensationType.HOURLY);
         post.setCompensationAmt(30F);
         post.setFreelancer(savedUser);
-        FreelancePost savedPost = freelanceRepository.save(post);
+        FreelancePost savedPost = freelancePostService.save(post);
 
         savedUser.getFreelancePosts().add(savedPost);
         userRepository.save(savedUser);
 
-        List<FreelancePost> freelancerPosts = freelanceRepository.findAllByFreelancer(savedUser);
+        List<FreelancePost> freelancerPosts = freelancePostService.findAllByFreelancer(savedUser);
 
         assertTrue(!freelancerPosts.isEmpty());
         assertEquals(savedPost, freelancerPosts.get(0));

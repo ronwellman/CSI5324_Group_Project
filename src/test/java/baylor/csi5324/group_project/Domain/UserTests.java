@@ -1,6 +1,6 @@
 package baylor.csi5324.group_project.Domain;
 
-import baylor.csi5324.group_project.Repository.UserRepository;
+import baylor.csi5324.group_project.Service.UserService;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertTrue;
 public class UserTests {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Test
     @Order(1)
@@ -30,10 +30,10 @@ public class UserTests {
         user.setPhone("123-456-7890");
         user.setZip("90210");
 
-        User saved = userRepository.save(user);
+        User saved = userService.save(user);
 
-        Optional<User> userById = userRepository.findById(user.getId());
-        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
+        Optional<User> userById = userService.findById(user.getId());
+        Optional<User> userByEmail = userService.findByEmail(user.getEmail());
 
         assertTrue(userById.isPresent());
         assertEquals(saved, userById.get());

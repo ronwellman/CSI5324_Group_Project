@@ -2,8 +2,12 @@ package baylor.csi5324.group_project.Service;
 
 import baylor.csi5324.group_project.Domain.User;
 
-public interface UserService {
-    public User newUser(User user);
+import java.util.Optional;
 
-    public User updateUser(User user);
+public interface UserService {
+    public User save(User user);
+
+    public Optional<User> findById(Long id);
+
+    public Optional<User> findByEmail(String email);
 }
