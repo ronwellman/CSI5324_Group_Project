@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "jobs")
@@ -25,4 +27,22 @@ public class Job {
     private LocalDateTime startDate;
     @NotNull
     private LocalDateTime endDate;
+
+    @OneToOne
+    private FreelancePost freelancePost;
+
+    @OneToOne
+    private Commission commission;
+
+    @OneToMany(mappedBy = "job")
+    private Set<Artifact> artifacts = new HashSet<>();
+
+    @OneToMany(mappedBy = "job")
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "job")
+    private Set<Issue> issues = new HashSet<>();
+
+    @OneToOne
+    private Contract contract;
 }

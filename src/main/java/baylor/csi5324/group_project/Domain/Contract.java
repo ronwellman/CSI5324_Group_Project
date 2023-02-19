@@ -24,6 +24,16 @@ public class Contract implements Serializable{
     private boolean proofOfSignature;
     private LocalDate timestamp;
 
+    @OneToOne
+    private Job job;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne
+    private Payment payment;
+
     //private List<Contract> contracts = new ArrayList<>();
 
     // public void uploadContract(Contract contract) {

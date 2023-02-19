@@ -20,4 +20,12 @@ public class Issue {
     @NotNull
     @NotBlank
     private String issueType;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id", referencedColumnName = "id")
+    private Job job;
 }

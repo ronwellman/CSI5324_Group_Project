@@ -51,6 +51,9 @@ public class FreelancePost implements Serializable {
     @JoinColumn(name = "user_id")
     private User freelancer;
 
+    @OneToOne
+    private Job job;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

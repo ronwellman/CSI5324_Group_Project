@@ -20,4 +20,8 @@ public class Artifact {
     @NotNull
     @NotBlank
     private String documentType;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id", referencedColumnName = "id")
+    private Job job;
 }

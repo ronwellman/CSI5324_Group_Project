@@ -25,4 +25,12 @@ public class Review {
     @DecimalMin("0.0")
     @DecimalMax("5.0")
     private BigDecimal rating;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User reviewer;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id", referencedColumnName = "id")
+    private Job job;
 }

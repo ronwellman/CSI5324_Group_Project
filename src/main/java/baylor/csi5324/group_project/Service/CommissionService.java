@@ -7,8 +7,9 @@ import baylor.csi5324.group_project.Domain.Commission;
 public class CommissionService {
 
     public Commission addCommission(Long id, String listingTitle, String description, LocalDate deadline, Float budget){
-        Commission commission = new Commission(id, listingTitle, description, deadline, budget);
-        return commission;
+//        Commission commission = new Commission(id, listingTitle, description, deadline, budget);
+//        return commission;
+        return null;
     }
 
     public void updateCommission(Commission commission) {

@@ -34,4 +34,8 @@ public class Bid {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "commission_id", referencedColumnName = "id")
+    private Commission commission;
 }

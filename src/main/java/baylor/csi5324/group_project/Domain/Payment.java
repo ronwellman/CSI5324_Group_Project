@@ -39,4 +39,11 @@ public class Payment {
     @NotNull
     @NotBlank
     private String confirmationCode;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne
+    private Contract contract;
 }

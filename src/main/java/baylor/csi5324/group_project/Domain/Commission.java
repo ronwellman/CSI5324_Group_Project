@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,16 @@ public class Commission implements Serializable {
     private String description;
     private LocalDate deadline;
     private Float budget;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne(mappedBy = "commission")
+    private Job job;
+
+    @OneToMany(mappedBy = "commission")
+    private Set<Bid> bids;
 
     // Getters
     public String getListingTitle() {

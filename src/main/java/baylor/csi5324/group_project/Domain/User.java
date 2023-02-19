@@ -21,10 +21,8 @@ public class User implements Serializable {
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
-
     private String street;
     private String city;
     @Size(max = 2, message = "2 digit state")
@@ -40,6 +38,27 @@ public class User implements Serializable {
     @JsonBackReference
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FreelancePost> freelancePosts = new HashSet<>();
+
+    @OneToMany
+    private Set<Message> messages = new HashSet<>();
+
+    @OneToMany
+    private Set<Commission> commissions = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Bid> bids = new HashSet<>();
+
+    @OneToMany(mappedBy = "reviewer")
+    private Set<Review> reviews = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
+    private Set<Issue> issues;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Contract> contracts;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Payment> payments;
 
     @Override
     public boolean equals(Object o) {
