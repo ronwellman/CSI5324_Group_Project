@@ -32,7 +32,7 @@ public class FreelancePostingTests {
         user.setStreet("123 Bayside Dr");
         user.setCity("Los Angeles");
         user.setState("CA");
-        user.setEmail("slater@bayside.edu");
+        user.setEmail("slater2@bayside.edu");
         user.setPhone("123-456-7890");
         user.setZip("90210");
 
