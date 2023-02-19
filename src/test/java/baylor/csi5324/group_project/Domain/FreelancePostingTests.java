@@ -1,7 +1,7 @@
 package baylor.csi5324.group_project.Domain;
 
 
-import baylor.csi5324.group_project.Repository.FreelanceRepository;
+import baylor.csi5324.group_project.Repository.FreelancePostRepository;
 import baylor.csi5324.group_project.Repository.UserRepository;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class FreelancePostingTests {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private FreelanceRepository freelanceRepository;
+    private FreelancePostRepository freelanceRepository;
 
     @Test
     @Order(2)

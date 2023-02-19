@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface FreelanceRepository extends CrudRepository<FreelancePost, Long> {
+public interface FreelancePostRepository extends CrudRepository<FreelancePost, Long> {
     Optional<FreelancePost> findById(Long id);
 
     List<FreelancePost> findAllByFreelancer(User user);
