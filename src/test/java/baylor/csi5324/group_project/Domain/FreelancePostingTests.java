@@ -1,8 +1,8 @@
 package baylor.csi5324.group_project.Domain;
 
 
-import baylor.csi5324.group_project.Repository.UserRepository;
 import baylor.csi5324.group_project.Service.FreelancePostService;
+import baylor.csi5324.group_project.Service.UserService;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class FreelancePostingTests {
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     private FreelancePostService freelancePostService;
 
@@ -35,7 +35,7 @@ public class FreelancePostingTests {
         user.setPhone("123-456-7890");
         user.setZip("90210");
 
-        User savedUser = userRepository.save(user);
+        User savedUser = userService.save(user);
 
         FreelancePost post = new FreelancePost();
         post.setListingTitle("Landscaping");
@@ -48,7 +48,7 @@ public class FreelancePostingTests {
         FreelancePost savedPost = freelancePostService.save(post);
 
         savedUser.getFreelancePosts().add(savedPost);
-        userRepository.save(savedUser);
+        userService.save(savedUser);
 
         List<FreelancePost> freelancerPosts = freelancePostService.findAllByFreelancer(savedUser);
 
