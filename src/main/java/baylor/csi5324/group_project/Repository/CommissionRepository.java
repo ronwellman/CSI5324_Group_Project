@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface CommissionRepository extends CrudRepository<Commission, Long>{
 
     public Optional<Commission> findCommissionById(Long id);
+    public Optional<Commission> findCommissionByListingTitle(String listingTitle);
 }
