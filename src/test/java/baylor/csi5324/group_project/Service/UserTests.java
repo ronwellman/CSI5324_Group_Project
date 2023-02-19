@@ -1,6 +1,6 @@
-package baylor.csi5324.group_project.Domain;
+package baylor.csi5324.group_project.Service;
 
-import baylor.csi5324.group_project.Service.UserService;
+import baylor.csi5324.group_project.Domain.User;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
