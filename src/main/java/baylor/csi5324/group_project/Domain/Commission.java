@@ -67,6 +67,18 @@ public class Commission implements Serializable {
         return budget;
     }
 
+    public User getUser(){
+        return user;
+    }
+
+    public Job getJob(){
+        return job;
+    }
+
+    public Set<Bid> getBids(){
+        return bids;
+    }
+
     //Setters
     public void setListingTitle(String title){
         this.listingTitle = title;
@@ -82,6 +94,18 @@ public class Commission implements Serializable {
 
     public void setBudget(Float listingBudget){
         this.budget = listingBudget;
+    }
+
+    public void setUser(User userPostingCommission){
+        this.user = userPostingCommission;
+    }
+
+    public void setJob(Job associatedJob){
+        this.job = associatedJob;
+    }
+
+    public void setBids(Set<Bid> bidsOnCommission){
+        this.bids = bidsOnCommission;
     }
 
 }
