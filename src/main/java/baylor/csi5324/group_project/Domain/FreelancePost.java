@@ -19,13 +19,12 @@ public class FreelancePost implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "title required")
     private String listingTitle;
 
     private String description;
 
-    @NotNull
-    private Boolean active;
+    private Boolean active = false;
 
     public Boolean getActive() {
         return active;
@@ -35,13 +34,13 @@ public class FreelancePost implements Serializable {
         this.active = active;
     }
 
-    @NotNull
+    @NotNull(message = "compensation type required")
     private CompensationType compensationType;
 
-    @NotNull
+    @NotNull(message = "compensation amount required")
     private Float compensationAmt;
 
-    @NotNull
+    @NotNull(message = "creation timestamp required")
     private Timestamp createdAt;
 
     private Timestamp lastUpdatedAT;

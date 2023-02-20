@@ -70,5 +70,75 @@ public class FreelancePostTest {
                 });
     }
 
+    @Test
+    @DisplayName("Persist FreelancePost: NULL listingTitle")
+    void persistFreelancePostTitleNull() {
+        User savedUser = em.persistAndFlush(user);
+        post.setFreelancer(savedUser);
+        post.setListingTitle(null);
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(post)
+        );
 
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    Assertions.assertEquals("title required", violation.getMessage());
+                    Assertions.assertEquals("listingTitle", violation.getPropertyPath().toString());
+                });
+    }
+
+    @Test
+    @DisplayName("Persist FreelancePost: NULL compensationType")
+    void persistFreelancePostCompensationTypeNull() {
+        User savedUser = em.persistAndFlush(user);
+        post.setFreelancer(savedUser);
+        post.setCompensationType(null);
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(post)
+        );
+
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    Assertions.assertEquals("compensation type required", violation.getMessage());
+                    Assertions.assertEquals("compensationType", violation.getPropertyPath().toString());
+                });
+    }
+
+    @Test
+    @DisplayName("Persist FreelancePost: NULL compensationAmt")
+    void persistFreelancePostCompensationAmtNull() {
+        User savedUser = em.persistAndFlush(user);
+        post.setFreelancer(savedUser);
+        post.setCompensationAmt(null);
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(post)
+        );
+
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    Assertions.assertEquals("compensation amount required", violation.getMessage());
+                    Assertions.assertEquals("compensationAmt", violation.getPropertyPath().toString());
+                });
+    }
+
+    @Test
+    @DisplayName("Persist FreelancePost: NULL createdAt")
+    void persistFreelancePostCreatedAtAmtNull() {
+        User savedUser = em.persistAndFlush(user);
+        post.setFreelancer(savedUser);
+        post.setCreatedAt(null);
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(post)
+        );
+
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    Assertions.assertEquals("creation timestamp required", violation.getMessage());
+                    Assertions.assertEquals("createdAt", violation.getPropertyPath().toString());
+                });
+    }
 }
