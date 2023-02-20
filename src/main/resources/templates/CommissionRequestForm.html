@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Commissions</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+  </head>
+
+  <body>
+
+    <form method="POST" th:action="@{/commissions}" th:object="${commission}">
+      <h1>Post a Commission Request</h1>
+
+      <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+        Please correct the problems below and resubmit.
+        </span>
+      </div>
+
+      <h3>Provide the following information:</h3>
+      <label for="listingTitle">Listing Title: </label>
+      <input type="text" th:field="*{listingTitle}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('listingTitle')}"
+            th:errors="*{listingTitle}">Title Error</span>
+      <br/>
+
+      <label for="description">Description: </label>
+      <input type="text" th:field="*{description}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('description')}"
+            th:errors="*{description}">Description Error</span>
+      <br/>
+
+      <label for="deadline">Commission Deadline: </label>
+      <input type="date" th:field="*{deadline}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('deadline')}"
+            th:errors="*{deadline}">Deadline Error</span>
+      <br/>
+
+      <label for="budget">Commission Budget: </label>
+      <input type="number" step="0.01" th:field="*{budget}"/>
+      <span class="validationError"
+            th:if="${#fields.hasErrors('deadline')}"
+            th:errors="*{deadline}">Budget Error</span>
+      <br/>
+
+      <input type="submit" value="Post Commission Request"/>
+    </form>
+  </body>
+</html>
+
+
+
