@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class FeelancePostTest {
+public class FreelancePostTest {
     @Autowired
     private TestEntityManager em;
     private User user;
