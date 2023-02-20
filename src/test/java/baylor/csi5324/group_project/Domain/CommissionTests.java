@@ -31,7 +31,6 @@ public class CommissionTests {
 
     @BeforeEach
     void createNewCommission() {
-
         commission = new Commission();
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");

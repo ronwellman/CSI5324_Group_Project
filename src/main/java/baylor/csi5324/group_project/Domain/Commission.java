@@ -1,11 +1,14 @@
 package baylor.csi5324.group_project.Domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +24,17 @@ public class Commission implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne(mappedBy = "commission")
+    private Job job;
+
+    @OneToMany(mappedBy = "commission")
+    private Set<Bid> bids;
+
+
     @NotNull(message="Listing title cannot be null.")
     @NotBlank(message="Listing title cannot be blank.")
     private String listingTitle;
@@ -34,6 +48,7 @@ public class Commission implements Serializable {
 
     @NotNull(message="Listing budget cannot be null.")
     private Float budget;
+
 
     // Getters
     public String getListingTitle() {
