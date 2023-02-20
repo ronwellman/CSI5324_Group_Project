@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +24,6 @@ public class Commission implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String listingTitle;
-    private String description;
-    private LocalDate deadline;
-    private Float budget;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -34,6 +33,22 @@ public class Commission implements Serializable {
 
     @OneToMany(mappedBy = "commission")
     private Set<Bid> bids;
+
+
+    @NotNull(message="Listing title cannot be null.")
+    @NotBlank(message="Listing title cannot be blank.")
+    private String listingTitle;
+
+    @NotNull(message="Listing description cannot be null.")
+    @NotBlank(message="Listing description cannot be blank.")
+    private String description;
+
+    @NotNull(message="Listing deadline cannot be null.")
+    private LocalDate deadline;
+
+    @NotNull(message="Listing budget cannot be null.")
+    private Float budget;
+
 
     // Getters
     public String getListingTitle() {
