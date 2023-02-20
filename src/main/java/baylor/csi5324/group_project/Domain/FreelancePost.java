@@ -49,6 +49,7 @@ public class FreelancePost implements Serializable {
     @JsonIdentityReference
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @NotNull(message = "valid user required")
     private User freelancer;
 
     @OneToOne
