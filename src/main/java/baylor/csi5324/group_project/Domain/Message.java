@@ -22,20 +22,23 @@ public class Message implements Serializable {
     private Long id;
 
     @ManyToOne
+    @NotNull(message = "valid sender required")
     private User sender;
 
     @ManyToOne
+    @NotNull(message = "valid receiver required")
     private User receiver;
 
-    @NotNull
+    @NotNull(message = "a message is required")
     private String message;
 
-    @NotNull
+
+    @NotNull(message = "send time required")
     private Timestamp sendTime;
 
-    @NotNull
-    private Boolean read;
-    
+    @NotNull(message = "valid read status required")
+    private Boolean read = false;
+
     private Timestamp readTime;
 
     @Override

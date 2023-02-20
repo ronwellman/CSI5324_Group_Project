@@ -3,6 +3,7 @@ package baylor.csi5324.group_project.Domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,7 +33,7 @@ public class User implements Serializable {
     private String zip;
 
     @Email(message = "valid email required")
-    @Column(nullable = false)
+    @NotNull(message = "valid email required")
     private String email;
     private String phone;
 
