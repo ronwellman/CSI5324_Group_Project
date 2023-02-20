@@ -1,6 +1,8 @@
 package baylor.csi5324.group_project.Domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,9 +21,18 @@ public class Commission implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message="Listing title cannot be null.")
+    @NotBlank(message="Listing title cannot be blank.")
     private String listingTitle;
+
+    @NotNull(message="Listing description cannot be null.")
+    @NotBlank(message="Listing description cannot be blank.")
     private String description;
+
+    @NotNull(message="Listing deadline cannot be null.")
     private LocalDate deadline;
+
+    @NotNull(message="Listing budget cannot be null.")
     private Float budget;
 
     // Getters

@@ -4,42 +4,122 @@ import java.time.LocalDate;
 
 import baylor.csi5324.group_project.Repository.CommissionRepository;
 
+import jakarta.validation.ConstraintViolationException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class CommissionTests {
 
     @Autowired
-    private CommissionRepository commissionRepository;
+    TestEntityManager em;
 
-    @Test
+    Commission commission;
+
+    @BeforeEach
     void createNewCommission() {
 
-        Commission commission = new Commission();
+        commission = new Commission();
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");
         commission.setDeadline(LocalDate.parse("2023-04-27"));
         commission.setBudget(46.87f);
-
-        Commission savedCommission = commissionRepository.save(commission);
-
-        Optional<Commission> commissionById = commissionRepository.findById(commission.getId());
-        Optional<Commission> commissionByListingTitle = commissionRepository.findCommissionByListingTitle(commission.getListingTitle());
-
-        assertTrue(commissionById.isPresent());
-        assertEquals(savedCommission, commissionById.get());
-        assertTrue(commissionByListingTitle.isPresent());
-        assertEquals(savedCommission, commissionByListingTitle.get());
     }
+
+    @Test
+    void testNewCommission(){
+        assertNull(commission.getId());
+        Commission savedCommission = em.persistAndFlush(commission);
+
+        assertNotNull(commission.getId());
+        assertNotNull(savedCommission.getId());
+        assertEquals(commission, savedCommission);
+    }
+
+    @Test
+    void nullListingTitle(){
+
+        assertNull(commission.getId());
+        commission.setListingTitle(null);
+
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(commission)
+        );
+
+        String expectedMessageNull = "Listing title cannot be null.";
+        String expectedMessageBlank = "Listing title cannot be blank.";
+        String actualMessage = e.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessageNull) & actualMessage.contains(expectedMessageBlank));
+    }
+
+    @Test
+    void nullListingDescription(){
+
+        assertNull(commission.getId());
+        commission.setDescription(null);
+
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(commission)
+        );
+
+        String expectedMessageNull = "Listing description cannot be null.";
+        String expectedMessageBlank = "Listing description cannot be blank.";
+        String actualMessage = e.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessageNull) & actualMessage.contains(expectedMessageBlank));
+    }
+
+    @Test
+    void nullListingDeadline(){
+
+        assertNull(commission.getId());
+        commission.setDeadline(null);
+
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(commission)
+        );
+
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    assertEquals("Listing deadline cannot be null.", violation.getMessage());
+                    assertEquals("deadline", violation.getPropertyPath().toString());
+                });
+    }
+
+    @Test
+    void nullListingBudget(){
+
+        assertNull(commission.getId());
+        commission.setBudget(null);
+
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(commission)
+        );
+
+        e.getConstraintViolations()
+                .forEach(violation -> {
+                    assertEquals("Listing budget cannot be null.", violation.getMessage());
+                    assertEquals("budget", violation.getPropertyPath().toString());
+                });
+    }
+
 }
 
