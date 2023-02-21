@@ -18,14 +18,14 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @CreationTimestamp
-    @NotNull
+    @NotNull(message = "valid createdAT required")
     private LocalDateTime createdAt;
     @UpdateTimestamp
-    @NotNull
+    @NotNull(message = "valid updatedAt required")
     private LocalDateTime updatedAt;
-    @NotNull
+    @NotNull(message = "valid startDate required")
     private LocalDateTime startDate;
-    @NotNull
+    @NotNull(message = "valid endDate required")
     private LocalDateTime endDate;
 
     @OneToOne
