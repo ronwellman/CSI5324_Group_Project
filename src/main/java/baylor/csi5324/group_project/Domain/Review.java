@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reviews")
@@ -17,20 +18,37 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "description is required")
+    @NotBlank(message = "description is required")
     private String description;
 
-    @NotNull
+    @NotNull(message = "rating is required")
     @DecimalMin("0.0")
     @DecimalMax("5.0")
     private BigDecimal rating;
 
     @ManyToOne
+    @NotNull(message = "valid reviewer is required")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User reviewer;
 
     @ManyToOne
+    @NotNull(message = "valid job is required")
     @JoinColumn(name = "job_id", referencedColumnName = "id")
     private Job job;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review review = (Review) o;
+
+        return Objects.equals(id, review.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
