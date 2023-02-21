@@ -45,7 +45,10 @@ public class User implements Serializable {
     @OneToMany
     private Set<Message> messages = new HashSet<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    Set<Notification> notifications = new HashSet<>();
+
+    @OneToMany(mappedBy = "user")
     private Set<Commission> commissions = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
