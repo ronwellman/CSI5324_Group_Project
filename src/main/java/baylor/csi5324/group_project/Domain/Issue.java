@@ -13,19 +13,20 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "description is required")
+    @NotBlank(message = "description is required")
     private String description;
 
-    @NotNull
-    @NotBlank
-    private String issueType;
+    @NotNull(message = "issueType is required")
+    private IssueType issueType;
 
     @ManyToOne
+    @NotNull(message = "valid user is required")
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToOne
+    @NotNull(message = "valid job is required")
     @JoinColumn(name = "job_id", referencedColumnName = "id")
     private Job job;
 }
