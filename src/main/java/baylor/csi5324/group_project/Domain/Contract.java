@@ -1,11 +1,10 @@
 package baylor.csi5324.group_project.Domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +21,8 @@ public class Contract implements Serializable{
     private Long id;
 
     private boolean proofOfSignature;
+
+    @NotNull(message="valid timestamp required")
     private LocalDate timestamp;
 
     @OneToOne
@@ -34,10 +35,46 @@ public class Contract implements Serializable{
     @OneToOne
     private Payment payment;
 
-    //private List<Contract> contracts = new ArrayList<>();
+    //Getters
+    public boolean getProofOfSignature(){
+        return proofOfSignature;
+    }
 
-    // public void uploadContract(Contract contract) {
-    //     this.contracts.add(contract);
-    // }
+    public LocalDate getTimestamp() {
+        return timestamp;
+    }
+
+    public Job getJob(){
+        return job;
+    }
+
+    public User getUser(){
+        return user;
+    }
+
+    public Payment getPayment(){
+        return payment;
+    }
+
+    // Setters
+    public void setProofOfSignature(boolean isSigned){
+        this.proofOfSignature = isSigned;
+    }
+
+    public void setTimestamp(LocalDate contractTimestamp){
+        this.timestamp = contractTimestamp;
+    }
+
+    public void setJob(Job associatedJob){
+        this.job = associatedJob;
+    }
+
+    public void setUser(User userUploadingContract){
+        this.user = userUploadingContract;
+    }
+
+    public void setPayment(Payment contractPayment){
+        this.payment = contractPayment;
+    }
 
 }
