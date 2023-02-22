@@ -8,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -24,14 +23,12 @@ public class ContractTests {
     Contract contract;
     Job job;
     User user;
-    Payment payment;
 
     @BeforeEach
     void createNewContract() {
         contract = new Contract();
         job = new Job();
         user = new User();
-        payment = new Payment();
 
         contract.setProofOfSignature(false);
         contract.setTimestamp(LocalDate.now());
@@ -50,19 +47,11 @@ public class ContractTests {
         user.setEmail("john.doe@gmail.com");
         user.setPhone("123-456-7899");
 
-        payment.setPaymentType(PaymentType.CREDIT);
-        payment.setAmount(new BigDecimal("53.22"));
-        payment.setCreatedAt(LocalDateTime.parse("2023-02-20T00:00:00"));
-        payment.setUpdatedAt(LocalDateTime.parse("2023-02-28T00:00:00"));
-        payment.setConfirmationCode("ABCDEFG12345");
-
         em.persistAndFlush(job);
         em.persistAndFlush(user);
-        em.persistAndFlush(payment);
 
         contract.setJob(job);
         contract.setUser(user);
-        contract.setPayment(payment);
     }
 
     @Test
@@ -75,7 +64,6 @@ public class ContractTests {
         assertEquals(contract, savedContract);
         assertEquals(contract.getJob(), savedContract.getJob());
         assertEquals(contract.getUser(), savedContract.getUser());
-        assertEquals(contract.getPayment(), savedContract.getPayment());
     }
 
     @Test
