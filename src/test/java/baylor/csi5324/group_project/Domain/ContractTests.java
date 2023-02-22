@@ -1,9 +1,5 @@
 package baylor.csi5324.group_project.Domain;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.math.BigDecimal;
-
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,11 +8,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import static org.junit.Assert.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -54,7 +50,7 @@ public class ContractTests {
         user.setEmail("john.doe@gmail.com");
         user.setPhone("123-456-7899");
 
-        payment.setPaymentType("Credit Card");
+        payment.setPaymentType(PaymentType.CREDIT);
         payment.setAmount(new BigDecimal("53.22"));
         payment.setCreatedAt(LocalDateTime.parse("2023-02-20T00:00:00"));
         payment.setUpdatedAt(LocalDateTime.parse("2023-02-28T00:00:00"));
@@ -70,7 +66,7 @@ public class ContractTests {
     }
 
     @Test
-    void testNewContract(){
+    void testNewContract() {
         assertNull(contract.getId());
         Contract savedContract = em.persistAndFlush(contract);
 
@@ -83,7 +79,7 @@ public class ContractTests {
     }
 
     @Test
-    void nullTimestamp(){
+    void nullTimestamp() {
         assertNull(contract.getId());
         contract.setTimestamp(null);
 
