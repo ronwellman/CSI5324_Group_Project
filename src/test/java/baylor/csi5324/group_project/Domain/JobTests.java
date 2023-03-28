@@ -51,7 +51,7 @@ public class JobTests {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmt(30F);
+        post.setCompensationAmount(30F);
 
         job = new Job();
         job.setCreatedAt(LocalDateTime.now());

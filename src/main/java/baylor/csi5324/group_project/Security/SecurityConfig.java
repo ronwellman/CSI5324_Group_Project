@@ -16,13 +16,13 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests()
                 .requestMatchers("/h2-console/**").permitAll()
-                .anyRequest().authenticated()
+                .requestMatchers("/api/**").permitAll()
+                .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .formLogin(withDefaults());
-
 
         return http.build();
     }

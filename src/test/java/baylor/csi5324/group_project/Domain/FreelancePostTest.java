@@ -41,7 +41,7 @@ public class FreelancePostTest {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmt(30F);
+        post.setCompensationAmount(30F);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class FreelancePostTest {
     void persistFreelancePostCompensationAmtNull() {
         User savedUser = em.persistAndFlush(user);
         post.setFreelancer(savedUser);
-        post.setCompensationAmt(null);
+        post.setCompensationAmount(null);
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
                 () -> em.persistAndFlush(post)
@@ -120,7 +120,7 @@ public class FreelancePostTest {
         e.getConstraintViolations()
                 .forEach(violation -> {
                     Assertions.assertEquals("compensation amount required", violation.getMessage());
-                    Assertions.assertEquals("compensationAmt", violation.getPropertyPath().toString());
+                    Assertions.assertEquals("compensationAmount", violation.getPropertyPath().toString());
                 });
     }
 

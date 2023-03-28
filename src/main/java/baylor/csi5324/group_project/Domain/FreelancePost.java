@@ -1,6 +1,7 @@
 package baylor.csi5324.group_project.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -26,19 +27,11 @@ public class FreelancePost implements Serializable {
 
     private Boolean active = false;
 
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
     @NotNull(message = "compensation type required")
     private CompensationType compensationType;
 
     @NotNull(message = "compensation amount required")
-    private Float compensationAmt;
+    private Float compensationAmount;
 
     @NotNull(message = "creation timestamp required")
     private Timestamp createdAt;
@@ -46,6 +39,12 @@ public class FreelancePost implements Serializable {
     private Timestamp lastUpdatedAT;
 
     @JsonIdentityReference
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions"
+            })
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @NotNull(message = "valid user required")
@@ -69,7 +68,7 @@ public class FreelancePost implements Serializable {
         int result = id.hashCode();
         result = 31 * result + listingTitle.hashCode();
         result = 31 * result + compensationType.hashCode();
-        result = 31 * result + compensationAmt.hashCode();
+        result = 31 * result + compensationAmount.hashCode();
         return result;
     }
 
@@ -105,12 +104,12 @@ public class FreelancePost implements Serializable {
         this.compensationType = compensationType;
     }
 
-    public Float getCompensationAmt() {
-        return compensationAmt;
+    public Float getCompensationAmount() {
+        return compensationAmount;
     }
 
-    public void setCompensationAmt(Float compensationAmt) {
-        this.compensationAmt = compensationAmt;
+    public void setCompensationAmount(Float compensationAmount) {
+        this.compensationAmount = compensationAmount;
     }
 
     public Timestamp getCreatedAt() {
@@ -135,5 +134,13 @@ public class FreelancePost implements Serializable {
 
     public void setFreelancer(User freelancer) {
         this.freelancer = freelancer;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

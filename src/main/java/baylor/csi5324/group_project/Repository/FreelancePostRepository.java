@@ -12,4 +12,6 @@ public interface FreelancePostRepository extends CrudRepository<FreelancePost, L
 
     List<FreelancePost> findAllByFreelancer(User user);
 
+    List<FreelancePost> findAllByActive(boolean active);
+
 }
