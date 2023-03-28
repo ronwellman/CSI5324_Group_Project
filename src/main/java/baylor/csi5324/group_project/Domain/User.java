@@ -3,6 +3,7 @@ package baylor.csi5324.group_project.Domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,13 @@ public class User implements Serializable {
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull(message = "firstName is required")
+    @NotBlank(message = "firstName is required")
     private String firstName;
+
+    @NotNull(message = "lastName is required")
+    @NotBlank(message = "lastName is required")
     private String lastName;
     private String street;
     private String city;

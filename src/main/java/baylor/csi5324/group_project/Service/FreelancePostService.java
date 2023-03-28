@@ -6,8 +6,16 @@ import baylor.csi5324.group_project.Domain.User;
 import java.util.List;
 
 public interface FreelancePostService {
-    public FreelancePost save(FreelancePost freelancePost);
+    public FreelancePost addFreelancePost(FreelancePost freelancePost);
+
+    public void deleteFreelancePost(Long id);
 
     public List<FreelancePost> findAllByFreelancer(User user);
+
+    public List<FreelancePost> findAllActiveFreelancePosts();
+
+    public FreelancePost disableFreelancePost(Long id);
+
+    public FreelancePost enableFreelancePost(Long id);
 
 }
