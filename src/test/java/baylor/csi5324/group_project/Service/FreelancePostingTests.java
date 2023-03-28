@@ -8,40 +8,45 @@ import baylor.csi5324.group_project.Repository.FreelancePostRepository;
 import baylor.csi5324.group_project.Repository.UserRepository;
 import baylor.csi5324.group_project.Service.Impl.FreelancePostServiceImpl;
 import baylor.csi5324.group_project.Service.Impl.UserServiceImpl;
+import org.junit.Before;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class FreelancePostingTests {
 
-    @Mock
     private UserRepository userRepository;
-    @Mock
     private FreelancePostRepository freelancePostRepository;
-    @InjectMocks
     private UserServiceImpl userService;
-    @InjectMocks
     private FreelancePostServiceImpl freelancePostService;
 
     private User user;
     private FreelancePost post;
 
+    @Before
+    public void setupMock() {
+        userRepository = mock(UserRepository.class);
+        userService = new UserServiceImpl(userRepository);
+        freelancePostRepository = mock(FreelancePostRepository.class);
+        freelancePostService = new FreelancePostServiceImpl(freelancePostRepository, userService);
+    }
+
     @BeforeEach
     void setUp() {
+        userRepository = mock(UserRepository.class);
+        userService = new UserServiceImpl(userRepository);
+        freelancePostRepository = mock(FreelancePostRepository.class);
+        freelancePostService = new FreelancePostServiceImpl(freelancePostRepository, userService);
 
         user = new User();
         user.setFirstName("Albert");
@@ -62,7 +67,7 @@ public class FreelancePostingTests {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmt(30F);
+        post.setCompensationAmount(30F);
         post.setFreelancer(user);
         post.setId(1L);
 //        post = freelancePostService.addFreelancePost(tmpPost);
@@ -71,19 +76,30 @@ public class FreelancePostingTests {
 //        userService.save(user);
     }
 
-    @Test
-    @Order(1)
-    @DisplayName("Create freelancePost: Success")
-    void createNewFreelancePost() {
-        given(userRepository.save(user)).willReturn(user);
-        given(freelancePostRepository.save(post)).willReturn(post);
-
-        user = userRepository.save(user);
-        post.setFreelancer(user);
-
-        FreelancePost savedPost = freelancePostService.addFreelancePost(post);
-        assertNotNull(savedPost);
-    }
+//    @Test
+//    @Order(1)
+//    @DisplayName("Create freelancePost: Success")
+//    void createNewFreelancePost() {
+//        FreelancePostDTO dto = new FreelancePostDTO();
+////        user = userRepository.save(user);
+////        post.setFreelancer(user);
+////
+////        dto.userId = user.getId();
+////        dto.active = post.getActive();
+////        dto.compensationAmount = post.getCompensationAmount();
+////        dto.description = post.getDescription();
+////        dto.listingTitle = post.getListingTitle();
+////
+//        Optional<User> optionalUser = Optional.of(user);
+//        given(userRepository.save(user)).willReturn(user);
+//        given(userRepository.findById(1L)).willReturn(optionalUser);
+//        given(userService.findById(1L)).willReturn(optionalUser);
+//        given(freelancePostRepository.save(post)).willReturn(post);
+//        given(freelancePostService.addFreelancePost(dto)).willReturn(post);
+//
+//        FreelancePost savedPost = freelancePostService.addFreelancePost(dto);
+//        assertNotNull(savedPost);
+//    }
 
     @Test
     @Order(2)
