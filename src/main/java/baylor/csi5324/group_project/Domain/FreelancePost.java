@@ -1,6 +1,5 @@
 package baylor.csi5324.group_project.Domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -38,7 +37,7 @@ public class FreelancePost implements Serializable {
 
     private Timestamp lastUpdatedAT;
 
-    @JsonIdentityReference
+
     @JsonIgnoreProperties(value =
             {
                     "freelancePosts", "messages", "notifications",

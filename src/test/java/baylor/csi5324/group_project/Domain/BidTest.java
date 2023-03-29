@@ -43,7 +43,7 @@ class BidTest {
         testCommission.setDescription("A test description");
         testCommission.setListingTitle("A test title");
 
-        em.persistAndFlush(testUser);
+        testCommission.setUser(em.persistAndFlush(testUser));
         em.persistAndFlush(testCommission);
 
 
@@ -105,7 +105,7 @@ class BidTest {
 
     @Test
     @DisplayName("Persist Bid: Null Created At")
-    void persistBid_NULLCREATEDAT(){
+    void persistBid_NULLCREATEDAT() {
         assertNull(testBid.getId());
         testBid.setCreatedAt(null);
 
@@ -123,7 +123,7 @@ class BidTest {
 
     @Test
     @DisplayName("Persist Bid: Null Updated At")
-    void persistBid_NULLUPDATEDAT(){
+    void persistBid_NULLUPDATEDAT() {
         assertNull(testBid.getId());
         testBid.setUpdatedAt(null);
 
@@ -141,7 +141,7 @@ class BidTest {
 
     @Test
     @DisplayName("Persist Bid: Null User")
-    void persistBid_NULLUSER(){
+    void persistBid_NULLUSER() {
         assertNull(testBid.getId());
         testBid.setUser(null);
 
@@ -159,7 +159,7 @@ class BidTest {
 
     @Test
     @DisplayName("Persist Bid: Null Commission")
-    void persistBid_NULLCOMMISSION(){
+    void persistBid_NULLCOMMISSION() {
         assertNull(testBid.getId());
         testBid.setCommission(null);
 

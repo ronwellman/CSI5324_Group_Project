@@ -1,6 +1,5 @@
 package baylor.csi5324.group_project.Domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -46,7 +45,6 @@ public class User implements Serializable {
     private String phone;
 
     @ToString.Exclude
-    @JsonBackReference
     @JsonIgnoreProperties(value = {"freelancer"})
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FreelancePost> freelancePosts = new HashSet<>();
@@ -57,7 +55,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     Set<Notification> notifications = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Commission> commissions = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
@@ -170,5 +170,9 @@ public class User implements Serializable {
 
     public boolean addFreelancePosts(FreelancePost freelancePost) {
         return this.freelancePosts.add(freelancePost);
+    }
+
+    public boolean addCommission(Commission commission) {
+        return this.commissions.add(commission);
     }
 }
