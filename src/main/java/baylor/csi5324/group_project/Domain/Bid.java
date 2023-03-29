@@ -17,16 +17,16 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "amount is required")
     @DecimalMin("0.00")
     private BigDecimal amount;
 
     @CreationTimestamp
-    @NotNull
+    @NotNull(message = "createdAt is required")
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @UpdateTimestamp
-    @NotNull
+    @NotNull(message = "updatedAt is required")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     @JsonIgnoreProperties(value =

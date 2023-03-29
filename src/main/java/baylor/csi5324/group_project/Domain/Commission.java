@@ -121,4 +121,10 @@ public class Commission implements Serializable {
     public boolean addBids(Bid bid) {
         return this.bids.add(bid);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+
 }
