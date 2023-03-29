@@ -1,18 +1,16 @@
 package baylor.csi5324.group_project.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
-
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
 @Entity
@@ -24,8 +22,16 @@ public class Commission implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions"
+            })
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
+    @NotNull(message = "valid user is required")
     private User user;
 
     @OneToOne(mappedBy = "commission")
@@ -34,78 +40,83 @@ public class Commission implements Serializable {
     @OneToMany(mappedBy = "commission")
     private Set<Bid> bids;
 
-
-    @NotNull(message="Listing title cannot be null.")
-    @NotBlank(message="Listing title cannot be blank.")
+    @NotNull(message = "Listing title cannot be null.")
+    @NotBlank(message = "Listing title cannot be blank.")
     private String listingTitle;
 
-    @NotNull(message="Listing description cannot be null.")
-    @NotBlank(message="Listing description cannot be blank.")
+    @NotNull(message = "Listing description cannot be null.")
+    @NotBlank(message = "Listing description cannot be blank.")
     private String description;
 
-    @NotNull(message="Listing deadline cannot be null.")
+    @NotNull(message = "Listing deadline cannot be null.")
     private LocalDate deadline;
 
-    @NotNull(message="Listing budget cannot be null.")
+    @NotNull(message = "Listing budget cannot be null.")
     private Float budget;
 
+    private Boolean active = true;
 
-    // Getters
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String listingDescription) {
+        this.description = listingDescription;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
     public String getListingTitle() {
         return listingTitle;
     }
 
-    public String description(){
-        return description;
-    }
-
-    public LocalDate getDeadline(){
-        return deadline;
-    }
-
-    public Float getBudget(){
-        return budget;
-    }
-
-    public User getUser(){
-        return user;
-    }
-
-    public Job getJob(){
-        return job;
-    }
-
-    public Set<Bid> getBids(){
-        return bids;
-    }
-
-    //Setters
-    public void setListingTitle(String title){
+    public void setListingTitle(String title) {
         this.listingTitle = title;
     }
 
-    public void setDescription(String listingDescription){
-        this.description = listingDescription;
+    public LocalDate getDeadline() {
+        return deadline;
     }
 
-    public void setDeadline(LocalDate listingDeadline){
+    public void setDeadline(LocalDate listingDeadline) {
         this.deadline = listingDeadline;
     }
 
-    public void setBudget(Float listingBudget){
+    public Float getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Float listingBudget) {
         this.budget = listingBudget;
     }
 
-    public void setUser(User userPostingCommission){
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User userPostingCommission) {
         this.user = userPostingCommission;
     }
 
-    public void setJob(Job associatedJob){
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job associatedJob) {
         this.job = associatedJob;
     }
 
-    public void setBids(Set<Bid> bidsOnCommission){
-        this.bids = bidsOnCommission;
+    public Set<Bid> getBids() {
+        return bids;
     }
 
+    public boolean addBids(Bid bid) {
+        return this.bids.add(bid);
+    }
 }

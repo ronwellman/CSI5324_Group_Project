@@ -1,27 +1,19 @@
 package baylor.csi5324.group_project.Service;
 
-import java.time.LocalDate;
-
 import baylor.csi5324.group_project.Domain.Commission;
+import baylor.csi5324.group_project.Domain.CommissionDTO;
 
-public class CommissionService {
+import java.util.List;
+import java.util.Optional;
 
-//    public Commission addCommission(Long id, String listingTitle, String description, LocalDate deadline, Float budget){
-//        Commission commission = new Commission(id, listingTitle, description, deadline, budget);
-//        return commission;
-//    }
+public interface CommissionService {
+    public Commission addCommission(CommissionDTO dto);
 
-    public void updateCommission(Commission commission) {
-        String updatedListingTitle = commission.getListingTitle();
-        String updatedListingDescription = commission.getDescription();
-        LocalDate updatedListingDeadline = commission.getDeadline();
-        Float updatedListingBudget = commission.getBudget();
+    public Optional<Commission> getCommissionById(Long id);
 
-        commission.setListingTitle(updatedListingTitle);
-        commission.setDescription(updatedListingDescription);
-        commission.setDeadline(updatedListingDeadline);
-        commission.setBudget(updatedListingBudget);
+    public List<Commission> getActiveCommissions();
 
-    }
+    public List<Commission> getCommissionsByUser(Long id);
 
+    public void deleteCommission(Long id);
 }

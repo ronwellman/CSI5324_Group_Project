@@ -38,7 +38,7 @@ public class FreelanceServiceRestController {
         return freelancePostService.findAllActiveFreelancePosts();
     }
 
-    @GetMapping(value = "/post_by_user")
+    @GetMapping(value = "/posts_by_user")
     public List<FreelancePost> getPostsByUserId(@RequestParam(value = "id") Long id) {
         Optional<User> user = userService.findById(id);
         if (user.isEmpty()) {
