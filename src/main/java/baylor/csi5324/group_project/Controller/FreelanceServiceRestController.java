@@ -40,12 +40,12 @@ public class FreelanceServiceRestController {
 
     @GetMapping(value = "/posts_by_user")
     public List<FreelancePost> getPostsByUserId(@RequestParam(value = "id") Long id) {
-        Optional<User> user = userService.findById(id);
+        Optional<User> user = userService.getUserById(id);
         if (user.isEmpty()) {
             return null;
         }
 
-        return freelancePostService.findAllByFreelancer(user.get());
+        return freelancePostService.findAllByUser(user.get());
     }
 
     @PostMapping(value = "/enable_post")

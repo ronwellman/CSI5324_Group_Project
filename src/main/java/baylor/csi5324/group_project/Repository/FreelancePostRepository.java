@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface FreelancePostRepository extends CrudRepository<FreelancePost, Long> {
     Optional<FreelancePost> findById(Long id);
 
-    List<FreelancePost> findAllByFreelancer(User user);
+    List<FreelancePost> findAllByUser(User user);
 
     List<FreelancePost> findAllByActive(boolean active);
 

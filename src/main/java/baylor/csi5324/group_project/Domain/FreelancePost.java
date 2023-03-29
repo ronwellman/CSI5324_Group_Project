@@ -47,7 +47,7 @@ public class FreelancePost implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @NotNull(message = "valid user required")
-    private User freelancer;
+    private User user;
 
     @OneToOne
     private Job job;
@@ -127,12 +127,12 @@ public class FreelancePost implements Serializable {
         this.lastUpdatedAT = lastUpdatedAT;
     }
 
-    public User getFreelancer() {
-        return freelancer;
+    public User getUser() {
+        return user;
     }
 
-    public void setFreelancer(User freelancer) {
-        this.freelancer = freelancer;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Boolean getActive() {

@@ -38,9 +38,14 @@ public class CommissionServiceImpl implements CommissionService {
     }
 
     @Override
+    public Commission save(Commission commission) {
+        return commissionRepository.saveAndFlush(commission);
+    }
+
+    @Override
     @Transactional
     public Commission addCommission(CommissionDTO dto) {
-        Optional<User> tmpUser = userService.findById(dto.userId);
+        Optional<User> tmpUser = userService.getUserById(dto.userId);
         if (tmpUser.isEmpty()) {
             return null;
         }
@@ -73,7 +78,7 @@ public class CommissionServiceImpl implements CommissionService {
 
     @Override
     public List<Commission> getCommissionsByUser(Long id) {
-        Optional<User> user = userService.findById(id);
+        Optional<User> user = userService.getUserById(id);
         if (user.isEmpty()) {
             return null;
         }

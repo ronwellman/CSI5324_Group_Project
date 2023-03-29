@@ -81,7 +81,7 @@ public class JobTests {
         assertNull(job.getId());
 
         em.persistAndFlush(user);
-        post.setFreelancer(user);
+        post.setUser(user);
         FreelancePost savedPost = em.persistAndFlush(post);
         job.setFreelancePost(savedPost);
         Job savedJob = em.persistAndFlush(job);

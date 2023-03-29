@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CommissionService {
+
+    public Commission save(Commission commission);
+
     public Commission addCommission(CommissionDTO dto);
 
     public Optional<Commission> getCommissionById(Long id);

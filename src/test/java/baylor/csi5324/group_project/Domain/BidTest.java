@@ -80,7 +80,7 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("must not be null", violation.getMessage());
+                    assertEquals("amount is required", violation.getMessage());
                     assertEquals("amount", violation.getPropertyPath().toString());
                 });
     }
@@ -116,7 +116,7 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("must not be null", violation.getMessage());
+                    assertEquals("createdAt is required", violation.getMessage());
                     assertEquals("createdAt", violation.getPropertyPath().toString());
                 });
     }
@@ -134,7 +134,7 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("must not be null", violation.getMessage());
+                    assertEquals("updatedAt is required", violation.getMessage());
                     assertEquals("updatedAt", violation.getPropertyPath().toString());
                 });
     }
@@ -152,7 +152,7 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("must not be null", violation.getMessage());
+                    assertEquals("valid user required", violation.getMessage());
                     assertEquals("user", violation.getPropertyPath().toString());
                 });
     }
@@ -170,7 +170,7 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("must not be null", violation.getMessage());
+                    assertEquals("valid commission required", violation.getMessage());
                     assertEquals("commission", violation.getPropertyPath().toString());
                 });
     }

@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -19,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "email"})})
-@Data
 public class User implements Serializable {
     @Id
     @Column(nullable = false)
@@ -45,8 +43,8 @@ public class User implements Serializable {
     private String phone;
 
     @ToString.Exclude
-    @JsonIgnoreProperties(value = {"freelancer"})
-    @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = {"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FreelancePost> freelancePosts = new HashSet<>();
 
     @OneToMany
@@ -60,7 +58,9 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Commission> commissions = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Bid> bids = new HashSet<>();
 
     @OneToMany(mappedBy = "reviewer")
@@ -174,5 +174,9 @@ public class User implements Serializable {
 
     public boolean addCommission(Commission commission) {
         return this.commissions.add(commission);
+    }
+
+    public boolean addBid(Bid bid) {
+        return this.bids.add(bid);
     }
 }

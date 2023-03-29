@@ -5,14 +5,14 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
-@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,8 +37,10 @@ public class Commission implements Serializable {
     @OneToOne(mappedBy = "commission")
     private Job job;
 
-    @OneToMany(mappedBy = "commission")
-    private Set<Bid> bids;
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"commission"})
+    @OneToMany(mappedBy = "commission", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Bid> bids = new HashSet<>();
 
     @NotNull(message = "Listing title cannot be null.")
     @NotBlank(message = "Listing title cannot be blank.")
@@ -119,4 +121,10 @@ public class Commission implements Serializable {
     public boolean addBids(Bid bid) {
         return this.bids.add(bid);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+
 }

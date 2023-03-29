@@ -48,16 +48,16 @@ public class FreelancePostTest {
     @DisplayName("Persist FreelancePost: Success")
     void persistFreelancePost() {
         User savedUser = em.persistAndFlush(user);
-        post.setFreelancer(savedUser);
+        post.setUser(savedUser);
         FreelancePost savedPost = em.persistAndFlush(post);
 
         assertNotNull(savedPost.getId());
-        assertEquals(savedUser, savedPost.getFreelancer());
+        assertEquals(savedUser, savedPost.getUser());
     }
 
     @Test
-    @DisplayName("Persist FreelancePost: NULL freelancer")
-    void persistFreelancePostFreelancerNull() {
+    @DisplayName("Persist FreelancePost: NULL user")
+    void persistFreelancePostFreeUserNull() {
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
                 () -> em.persistAndFlush(post)
@@ -66,7 +66,7 @@ public class FreelancePostTest {
         e.getConstraintViolations()
                 .forEach(violation -> {
                     Assertions.assertEquals("valid user required", violation.getMessage());
-                    Assertions.assertEquals("freelancer", violation.getPropertyPath().toString());
+                    Assertions.assertEquals("user", violation.getPropertyPath().toString());
                 });
     }
 
@@ -74,7 +74,7 @@ public class FreelancePostTest {
     @DisplayName("Persist FreelancePost: NULL listingTitle")
     void persistFreelancePostTitleNull() {
         User savedUser = em.persistAndFlush(user);
-        post.setFreelancer(savedUser);
+        post.setUser(savedUser);
         post.setListingTitle(null);
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
@@ -92,7 +92,7 @@ public class FreelancePostTest {
     @DisplayName("Persist FreelancePost: NULL compensationType")
     void persistFreelancePostCompensationTypeNull() {
         User savedUser = em.persistAndFlush(user);
-        post.setFreelancer(savedUser);
+        post.setUser(savedUser);
         post.setCompensationType(null);
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
@@ -110,7 +110,7 @@ public class FreelancePostTest {
     @DisplayName("Persist FreelancePost: NULL compensationAmt")
     void persistFreelancePostCompensationAmtNull() {
         User savedUser = em.persistAndFlush(user);
-        post.setFreelancer(savedUser);
+        post.setUser(savedUser);
         post.setCompensationAmount(null);
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
@@ -128,7 +128,7 @@ public class FreelancePostTest {
     @DisplayName("Persist FreelancePost: NULL createdAt")
     void persistFreelancePostCreatedAtAmtNull() {
         User savedUser = em.persistAndFlush(user);
-        post.setFreelancer(savedUser);
+        post.setUser(savedUser);
         post.setCreatedAt(null);
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
