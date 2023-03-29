@@ -32,7 +32,7 @@ public class UserTests {
 
         User saved = userService.save(user);
 
-        Optional<User> userById = userService.findById(user.getId());
+        Optional<User> userById = userService.getUserById(user.getId());
         Optional<User> userByEmail = userService.findByEmail(user.getEmail());
 
         assertTrue(userById.isPresent());

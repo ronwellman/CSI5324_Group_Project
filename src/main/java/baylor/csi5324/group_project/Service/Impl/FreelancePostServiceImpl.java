@@ -26,7 +26,7 @@ public class FreelancePostServiceImpl implements FreelancePostService {
     }
 
     public FreelancePost addFreelancePost(FreelancePostDTO dto) {
-        Optional<User> user = userService.findById(dto.userId);
+        Optional<User> user = userService.getUserById(dto.userId);
         if (user.isEmpty()) {
             return null;
         }
@@ -40,7 +40,7 @@ public class FreelancePostServiceImpl implements FreelancePostService {
         freelancePost.setCompensationType(dto.compensationType);
         freelancePost.setDescription(dto.description);
         freelancePost.setListingTitle(dto.listingTitle);
-        freelancePost.setFreelancer(user.get());
+        freelancePost.setUser(user.get());
         freelancePost.setCreatedAt(Timestamp.from(Instant.now()));
         freelancePost.setLastUpdatedAT(freelancePost.getCreatedAt());
 
@@ -56,8 +56,8 @@ public class FreelancePostServiceImpl implements FreelancePostService {
         freelanceRepository.deleteById(id);
     }
 
-    public List<FreelancePost> findAllByFreelancer(User user) {
-        return freelanceRepository.findAllByFreelancer(user);
+    public List<FreelancePost> findAllByUser(User user) {
+        return freelanceRepository.findAllByUser(user);
     }
 
     @Override

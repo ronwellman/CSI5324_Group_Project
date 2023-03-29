@@ -68,7 +68,7 @@ public class FreelancePostingTests {
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
         post.setCompensationAmount(30F);
-        post.setFreelancer(user);
+        post.setUser(user);
         post.setId(1L);
 //        post = freelancePostService.addFreelancePost(tmpPost);
 
@@ -105,8 +105,8 @@ public class FreelancePostingTests {
     @Order(2)
     @DisplayName("Search for posts by user: Success")
     void getPostsByUser() {
-        given(freelancePostRepository.findAllByFreelancer(user)).willReturn(List.of(post));
-        List<FreelancePost> freelancerPosts = freelancePostService.findAllByFreelancer(user);
+        given(freelancePostRepository.findAllByUser(user)).willReturn(List.of(post));
+        List<FreelancePost> freelancerPosts = freelancePostService.findAllByUser(user);
 
         assertTrue(!freelancerPosts.isEmpty());
         assertEquals(post, freelancerPosts.get(0));

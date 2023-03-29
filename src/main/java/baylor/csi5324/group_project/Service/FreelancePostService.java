@@ -11,7 +11,7 @@ public interface FreelancePostService {
 
     public void deleteFreelancePost(Long id);
 
-    public List<FreelancePost> findAllByFreelancer(User user);
+    public List<FreelancePost> findAllByUser(User user);
 
     public List<FreelancePost> findAllActiveFreelancePosts();
 
