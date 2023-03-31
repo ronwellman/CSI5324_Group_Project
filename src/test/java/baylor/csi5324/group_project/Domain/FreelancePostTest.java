@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -41,7 +42,7 @@ public class FreelancePostTest {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmount(30F);
+        post.setCompensationAmount(new BigDecimal(("30")));
     }
 
     @Test

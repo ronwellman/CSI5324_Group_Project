@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Controller;
 
 import baylor.csi5324.group_project.Domain.Contract;
 import baylor.csi5324.group_project.Domain.Job;
+import baylor.csi5324.group_project.Exceptions.BidException;
 import baylor.csi5324.group_project.Exceptions.FreelancePostException;
 import baylor.csi5324.group_project.Exceptions.JobException;
 import baylor.csi5324.group_project.Exceptions.UserException;
@@ -28,6 +29,15 @@ public class JobRestController {
         try {
             return new ResponseEntity(jobService.hireFreelancer(freelancePostId, userId), HttpStatus.CREATED);
         } catch (FreelancePostException | UserException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/accept_bid")
+    public ResponseEntity<Job> acceptBid(@RequestParam(value = "id") Long bidId) {
+        try {
+            return new ResponseEntity(jobService.acceptBid(bidId), HttpStatus.CREATED);
+        } catch (BidException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

@@ -1,18 +1,17 @@
 package baylor.csi5324.group_project.Service.Impl;
 
 import baylor.csi5324.group_project.Domain.*;
+import baylor.csi5324.group_project.Exceptions.BidException;
 import baylor.csi5324.group_project.Exceptions.FreelancePostException;
 import baylor.csi5324.group_project.Exceptions.JobException;
 import baylor.csi5324.group_project.Exceptions.UserException;
 import baylor.csi5324.group_project.Repository.ContractRepository;
 import baylor.csi5324.group_project.Repository.JobRepository;
-import baylor.csi5324.group_project.Service.CommissionService;
-import baylor.csi5324.group_project.Service.FreelancePostService;
-import baylor.csi5324.group_project.Service.JobService;
-import baylor.csi5324.group_project.Service.UserService;
+import baylor.csi5324.group_project.Service.*;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,17 +24,20 @@ public class JobServiceImpl implements JobService {
     private final UserService userService;
     private final FreelancePostService freelancePostService;
     private final CommissionService commissionService;
+    private final BidService bidService;
 
     public JobServiceImpl(JobRepository jobRepository,
                           ContractRepository contractRepository,
                           UserService userService,
                           FreelancePostService freelancePostService,
-                          CommissionService commissionService) {
+                          CommissionService commissionService,
+                          BidService bidService) {
         this.jobRepository = jobRepository;
         this.contractRepository = contractRepository;
         this.freelancePostService = freelancePostService;
         this.commissionService = commissionService;
         this.userService = userService;
+        this.bidService = bidService;
     }
 
     @Override
@@ -74,6 +76,47 @@ public class JobServiceImpl implements JobService {
         job = jobRepository.saveAndFlush(job);
         contractRepository.saveAndFlush(contract);
         freelancePostService.save(freelancePost);
+        userService.save(freelancer);
+        userService.save(consumer);
+
+        return job;
+    }
+
+    @Override
+    @Transactional
+    public Job acceptBid(Long bidId) throws BidException {
+        Optional<Bid> tmpBid = bidService.findById(bidId);
+        if (tmpBid.isEmpty()) {
+            throw new BidException("invalid bid id");
+        }
+
+        Bid bid = tmpBid.get();
+        User freelancer = bid.getUser();
+        Commission commission = bid.getCommission();
+        CompensationType compensationType = bid.getCompensationType();
+        BigDecimal compensationAmount = bid.getCompensationAmount();
+        User consumer = commission.getUser();
+
+        Job job = new Job();
+        job.setCommission(commission);
+
+        commission.setJob(job);
+        commission.setStatus(CommissionStatus.HIRED);
+
+        Contract contract = new Contract();
+        contract.setJob(job);
+        contract.setFreelancer(freelancer);
+        contract.setConsumer(consumer);
+        contract.setCompensationType(compensationType);
+        contract.setCompensationAmount(compensationAmount);
+
+        freelancer.addFreelanceContract(contract);
+        consumer.addConsumerContract(contract);
+        job.setContract(contract);
+        
+        job = jobRepository.saveAndFlush(job);
+        contractRepository.saveAndFlush(contract);
+        commissionService.save(commission);
         userService.save(freelancer);
         userService.save(consumer);
 

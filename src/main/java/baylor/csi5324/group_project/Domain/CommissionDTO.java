@@ -3,6 +3,7 @@ package baylor.csi5324.group_project.Domain;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class CommissionDTO implements Serializable {
@@ -20,5 +21,5 @@ public class CommissionDTO implements Serializable {
     public LocalDate deadline;
 
     @NotNull(message = "budget is required")
-    public Float budget;
+    public BigDecimal budget;
 }

@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
@@ -40,7 +41,7 @@ public class CommissionTests {
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");
         commission.setDeadline(LocalDate.parse("2023-04-27"));
-        commission.setBudget(46.87f);
+        commission.setBudget(new BigDecimal("46.87"));
         commission.setUser(em.persistAndFlush(testUser));
     }
 

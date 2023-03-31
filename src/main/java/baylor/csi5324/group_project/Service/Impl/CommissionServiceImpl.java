@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Service.Impl;
 
 import baylor.csi5324.group_project.Domain.Commission;
 import baylor.csi5324.group_project.Domain.CommissionDTO;
+import baylor.csi5324.group_project.Domain.CommissionStatus;
 import baylor.csi5324.group_project.Domain.User;
 import baylor.csi5324.group_project.Repository.CommissionRepository;
 import baylor.csi5324.group_project.Service.CommissionService;
@@ -9,6 +10,7 @@ import baylor.csi5324.group_project.Service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +30,7 @@ public class CommissionServiceImpl implements CommissionService {
         String updatedListingTitle = commission.getListingTitle();
         String updatedListingDescription = commission.getDescription();
         LocalDate updatedListingDeadline = commission.getDeadline();
-        Float updatedListingBudget = commission.getBudget();
+        BigDecimal updatedListingBudget = commission.getBudget();
 
         commission.setListingTitle(updatedListingTitle);
         commission.setDescription(updatedListingDescription);
@@ -72,8 +74,8 @@ public class CommissionServiceImpl implements CommissionService {
     }
 
     @Override
-    public List<Commission> findActiveCommissions() {
-        return commissionRepository.findCommissionByActive(true);
+    public List<Commission> findOpenCommissions() {
+        return commissionRepository.findCommissionsByStatus(CommissionStatus.OPEN);
     }
 
     @Override

@@ -26,10 +26,12 @@ public class Job {
 
     private JobStatus status = JobStatus.PENDING;
 
+    @JsonIgnoreProperties(value = "jobs")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     private FreelancePost freelancePost;
 
+    @JsonIgnoreProperties(value = "job")
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "commission_id")
     private Commission commission;

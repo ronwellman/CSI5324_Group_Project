@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
@@ -37,7 +38,7 @@ public class ContractTests {
 
         contract.setJob(job);
         contract.setProofOfSignature(false);
-        contract.setCompensationAmount(100.00F);
+        contract.setCompensationAmount(new BigDecimal("100.00"));
         contract.setCompensationType(CompensationType.ONE_TIME);
 
         consumer.setFirstName("John");

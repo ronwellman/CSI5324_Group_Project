@@ -2,6 +2,8 @@ package baylor.csi5324.group_project.Domain;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
+
 public class FreelancePostDTO {
 
     @NotNull(message = "title required")
@@ -15,7 +17,7 @@ public class FreelancePostDTO {
     @NotNull(message = "compensation amount required")
 
     public CompensationType compensationType;
-    public Float compensationAmount;
+    public BigDecimal compensationAmount;
 
     @NotNull(message = "user id required")
     public Long userId;

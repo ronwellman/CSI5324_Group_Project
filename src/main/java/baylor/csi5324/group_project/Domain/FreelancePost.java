@@ -2,12 +2,14 @@ package baylor.csi5324.group_project.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -33,7 +35,8 @@ public class FreelancePost implements Serializable {
     private CompensationType compensationType;
 
     @NotNull(message = "compensation amount required")
-    private Float compensationAmount;
+    @DecimalMin("0.00")
+    private BigDecimal compensationAmount;
 
     @NotNull(message = "creation timestamp required")
     private Timestamp createdAt;
@@ -56,11 +59,6 @@ public class FreelancePost implements Serializable {
     @JsonIgnoreProperties(value = {"freelancePost, commission"})
     @OneToMany(mappedBy = "freelancePost", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Job> jobs = new HashSet<>();
-
-    @ToString.Exclude
-    @JsonIgnoreProperties(value = "freelancePost")
-    @OneToOne
-    private Job job;
 
     @Override
     public boolean equals(Object o) {
@@ -113,11 +111,11 @@ public class FreelancePost implements Serializable {
         this.compensationType = compensationType;
     }
 
-    public Float getCompensationAmount() {
+    public BigDecimal getCompensationAmount() {
         return compensationAmount;
     }
 
-    public void setCompensationAmount(Float compensationAmount) {
+    public void setCompensationAmount(BigDecimal compensationAmount) {
         this.compensationAmount = compensationAmount;
     }
 
