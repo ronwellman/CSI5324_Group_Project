@@ -10,7 +10,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +38,7 @@ class BidTest {
         testUser.setStreet("123 Main St");
         testUser.setZip("74544");
 
-        testCommission.setDeadline(LocalDate.parse("2023-01-01"));
+        testCommission.setDeadline(LocalDateTime.parse("2023-01-01T00:00:00"));
         testCommission.setBudget(new BigDecimal("50.00"));
         testCommission.setDescription("A test description");
         testCommission.setListingTitle("A test title");

@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 
@@ -40,7 +40,7 @@ public class CommissionTests {
         commission = new Commission();
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");
-        commission.setDeadline(LocalDate.parse("2023-04-27"));
+        commission.setDeadline(LocalDateTime.parse("2023-04-27T00:00:00"));
         commission.setBudget(new BigDecimal("46.87"));
         commission.setUser(em.persistAndFlush(testUser));
     }

@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +29,7 @@ public class CommissionServiceImpl implements CommissionService {
     public void updateCommission(Commission commission) {
         String updatedListingTitle = commission.getListingTitle();
         String updatedListingDescription = commission.getDescription();
-        LocalDate updatedListingDeadline = commission.getDeadline();
+        LocalDateTime updatedListingDeadline = commission.getDeadline();
         BigDecimal updatedListingBudget = commission.getBudget();
 
         commission.setListingTitle(updatedListingTitle);

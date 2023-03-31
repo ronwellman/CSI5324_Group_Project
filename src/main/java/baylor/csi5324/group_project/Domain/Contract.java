@@ -1,6 +1,7 @@
 package baylor.csi5324.group_project.Domain;
 
 import baylor.csi5324.group_project.Exceptions.ContractException;
+import baylor.csi5324.group_project.Exceptions.UserException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -26,7 +27,8 @@ public class Contract implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private boolean proofOfSignature = false;
+    private LocalDateTime freelancerSignature;
+    private LocalDateTime consumerSignature;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -106,22 +108,61 @@ public class Contract implements Serializable {
         return payment;
     }
 
-    public boolean isSigned() {
-        return this.proofOfSignature;
+    public LocalDateTime getFreelancerSignature() {
+        return freelancerSignature;
     }
 
-    public void setProofOfSignature(boolean isSigned) throws ContractException {
-        if (!this.proofOfSignature) {
+    public LocalDateTime getConsumerSignature() {
+        return consumerSignature;
+    }
+
+    public boolean isSigned() {
+        return (freelancerSignature != null && consumerSignature != null);
+    }
+
+    public void clearSignatures() {
+        this.freelancerSignature = null;
+        this.consumerSignature = null;
+    }
+
+    public void sign(Long userId) throws ContractException, UserException {
+        if (!this.readyToSign()) {
             if (null == this.job) {
                 throw new ContractException("job is required before signature");
             }
 
-            if (null == this.job.getEndDate() || null == this.job.getStartDate()) {
-                throw new ContractException("start and end date for job cannot be empty");
-            }
+//            if (null == this.job.getEndDate() || null == this.job.getStartDate()) {
+//                throw new ContractException("start and end date for job cannot be empty");
+//            }
         }
 
-        this.proofOfSignature = isSigned;
+        if (null == consumer || null == freelancer) {
+            throw new UserException("consumer/freelancer not assigned");
+        }
+
+        if (consumer.getId() == userId) {
+            consumerSignature = LocalDateTime.now();
+            return;
+        }
+
+        if (freelancer.getId() == userId) {
+            freelancerSignature = LocalDateTime.now();
+            return;
+        }
+
+        throw new UserException("invalid user id");
+    }
+
+    private Boolean readyToSign() {
+        if (null == this.job) {
+            return false;
+        }
+
+//        if (null == job.getStartDate() || null == job.getEndDate()) {
+//            return false;
+//        }
+
+        return true;
     }
 
     public void setJob(Job associatedJob) {

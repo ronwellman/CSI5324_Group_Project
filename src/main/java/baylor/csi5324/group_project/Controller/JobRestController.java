@@ -1,12 +1,11 @@
 package baylor.csi5324.group_project.Controller;
 
 import baylor.csi5324.group_project.Domain.Contract;
+import baylor.csi5324.group_project.Domain.DatesDTO;
 import baylor.csi5324.group_project.Domain.Job;
-import baylor.csi5324.group_project.Exceptions.BidException;
-import baylor.csi5324.group_project.Exceptions.FreelancePostException;
-import baylor.csi5324.group_project.Exceptions.JobException;
-import baylor.csi5324.group_project.Exceptions.UserException;
+import baylor.csi5324.group_project.Exceptions.*;
 import baylor.csi5324.group_project.Service.JobService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -85,6 +84,33 @@ public class JobRestController {
         try {
             return new ResponseEntity(jobService.cancelJob(jobId), HttpStatus.OK);
         } catch (JobException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/complete_job")
+    public ResponseEntity<Job> completeJob(@RequestParam(value = "id") Long jobId) {
+        try {
+            return new ResponseEntity(jobService.completeJob(jobId), HttpStatus.OK);
+        } catch (JobException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/job_dates")
+    public ResponseEntity<Job> setJobDates(@Valid @RequestBody DatesDTO dto) {
+        try {
+            return new ResponseEntity(jobService.adjustDates(dto), HttpStatus.OK);
+        } catch (JobException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping(value = "/sign_contract")
+    public ResponseEntity<Contract> signContract(@RequestParam(value = "contractId") Long contractId, @RequestParam(value = "userId") Long userId) {
+        try {
+            return new ResponseEntity(jobService.signContract(contractId, userId), HttpStatus.OK);
+        } catch (JobException | ContractException | UserException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

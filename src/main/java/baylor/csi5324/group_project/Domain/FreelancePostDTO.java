@@ -2,9 +2,10 @@ package baylor.csi5324.group_project.Domain;
 
 import jakarta.validation.constraints.NotNull;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class FreelancePostDTO {
+public class FreelancePostDTO implements Serializable {
 
     @NotNull(message = "title required")
     public String listingTitle;

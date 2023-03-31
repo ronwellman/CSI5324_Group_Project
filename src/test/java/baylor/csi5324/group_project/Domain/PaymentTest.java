@@ -39,7 +39,6 @@ class PaymentTest {
         job.setEndDate(LocalDateTime.parse("2023-02-28T00:00:00"));
 
         contract.setJob(job);
-        contract.setProofOfSignature(false);
         contract.setCompensationAmount(new BigDecimal("100.00"));
         contract.setCompensationType(CompensationType.ONE_TIME);
 

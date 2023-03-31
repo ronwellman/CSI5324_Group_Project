@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -43,7 +42,7 @@ public class JobTests {
         commission = new Commission();
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");
-        commission.setDeadline(LocalDate.parse("2023-04-27"));
+        commission.setDeadline(LocalDateTime.parse("2023-04-27T00:00:00"));
         commission.setBudget(new BigDecimal("46.87"));
 
         post = new FreelancePost();

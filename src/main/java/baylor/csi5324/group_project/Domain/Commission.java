@@ -11,7 +11,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,7 +54,7 @@ public class Commission implements Serializable {
     private String description;
 
     @NotNull(message = "Listing deadline cannot be null.")
-    private LocalDate deadline;
+    private LocalDateTime deadline;
 
     @NotNull(message = "Listing budget cannot be null.")
     @DecimalMin("0.0")
@@ -86,11 +86,11 @@ public class Commission implements Serializable {
         this.listingTitle = title;
     }
 
-    public LocalDate getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(LocalDate listingDeadline) {
+    public void setDeadline(LocalDateTime listingDeadline) {
         this.deadline = listingDeadline;
     }
 

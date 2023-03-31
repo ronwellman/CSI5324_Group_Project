@@ -1,10 +1,7 @@
 package baylor.csi5324.group_project.Service.Impl;
 
 import baylor.csi5324.group_project.Domain.*;
-import baylor.csi5324.group_project.Exceptions.BidException;
-import baylor.csi5324.group_project.Exceptions.FreelancePostException;
-import baylor.csi5324.group_project.Exceptions.JobException;
-import baylor.csi5324.group_project.Exceptions.UserException;
+import baylor.csi5324.group_project.Exceptions.*;
 import baylor.csi5324.group_project.Repository.ContractRepository;
 import baylor.csi5324.group_project.Repository.JobRepository;
 import baylor.csi5324.group_project.Service.*;
@@ -99,6 +96,7 @@ public class JobServiceImpl implements JobService {
 
         Job job = new Job();
         job.setCommission(commission);
+        job.setEndDate(commission.getDeadline());
 
         commission.setJob(job);
         commission.setStatus(CommissionStatus.HIRED);
@@ -113,7 +111,7 @@ public class JobServiceImpl implements JobService {
         freelancer.addFreelanceContract(contract);
         consumer.addConsumerContract(contract);
         job.setContract(contract);
-        
+
         job = jobRepository.saveAndFlush(job);
         contractRepository.saveAndFlush(contract);
         commissionService.save(commission);
@@ -182,5 +180,75 @@ public class JobServiceImpl implements JobService {
         Job job = tmpJob.get();
         job.setStatus(JobStatus.CANCELLED);
         return jobRepository.saveAndFlush(job);
+    }
+
+    @Override
+    public Job completeJob(Long jobId) throws JobException {
+        Optional<Job> tmpJob = jobRepository.findById(jobId);
+        if (tmpJob.isEmpty()) {
+            throw new JobException("invalid job id");
+        }
+
+        Job job = tmpJob.get();
+        if (job.getStatus() == JobStatus.INPROGRESS) {
+            job.setStatus(JobStatus.COMPLETE);
+            job = jobRepository.saveAndFlush(job);
+        }
+
+        return job;
+    }
+
+    @Override
+    public Job adjustDates(DatesDTO dto) throws JobException {
+        Optional<Job> tmpJob = jobRepository.findById(dto.jobId);
+        if (tmpJob.isEmpty()) {
+            throw new JobException("invalid job id");
+        }
+
+        Job job = tmpJob.get();
+        Contract contract = job.getContract();
+        if (contract.isSigned()) {
+            throw new JobException("cannot adjust job dates while contract is signed");
+        }
+        job.setStartDate(dto.startDate);
+        job.setEndDate(dto.endDate);
+
+        return jobRepository.saveAndFlush(job);
+    }
+
+    @Override
+    @Transactional
+    public Contract signContract(Long contractId, Long userId) throws ContractException, UserException, JobException {
+        Optional<Contract> tmpContract = contractRepository.findById(contractId);
+        if (tmpContract.isEmpty()) {
+            throw new ContractException("invalid contract id");
+        }
+
+        Optional<User> tmpUser = userService.findById(userId);
+        if (tmpUser.isEmpty()) {
+            throw new UserException("invalid user id");
+        }
+
+        Contract contract = tmpContract.get();
+        Job job = contract.getJob();
+        if (null == job) {
+            throw new ContractException("job not assigned");
+        }
+
+        if (null == job.getStartDate() || null == job.getEndDate()) {
+            throw new JobException("missing start/end dates");
+        }
+
+        if (contract.isSigned()) {
+            return contract;
+        }
+
+        contract.sign(userId);
+        if (contract.isSigned()) {
+            job.setStatus(JobStatus.INPROGRESS);
+            jobRepository.saveAndFlush(job);
+        }
+
+        return contractRepository.saveAndFlush(contract);
     }
 }

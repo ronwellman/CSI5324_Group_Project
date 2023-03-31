@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CommissionDTO implements Serializable {
 
@@ -18,7 +18,7 @@ public class CommissionDTO implements Serializable {
     public String description;
 
     @NotNull(message = "deadline is required")
-    public LocalDate deadline;
+    public LocalDateTime deadline;
 
     @NotNull(message = "budget is required")
     public BigDecimal budget;
