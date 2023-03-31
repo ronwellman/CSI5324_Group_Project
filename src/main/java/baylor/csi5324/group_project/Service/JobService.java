@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Service;
 
 import baylor.csi5324.group_project.Domain.Contract;
 import baylor.csi5324.group_project.Domain.Job;
+import baylor.csi5324.group_project.Exceptions.BidException;
 import baylor.csi5324.group_project.Exceptions.FreelancePostException;
 import baylor.csi5324.group_project.Exceptions.JobException;
 import baylor.csi5324.group_project.Exceptions.UserException;
@@ -11,6 +12,8 @@ import java.util.Optional;
 
 public interface JobService {
     public Job hireFreelancer(Long freelancerPostId, Long consumerId) throws FreelancePostException, UserException;
+
+    public Job acceptBid(Long bidId) throws BidException;
 
     public Job save(Job job);
 

@@ -3,6 +3,7 @@ package baylor.csi5324.group_project.Domain;
 import baylor.csi5324.group_project.Exceptions.ContractException;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -36,7 +38,8 @@ public class Contract implements Serializable {
     private CompensationType compensationType;
 
     @NotNull(message = "compensation amount is required")
-    private Float compensationAmount;
+    @DecimalMin("0.00")
+    private BigDecimal compensationAmount;
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = "contract")
@@ -85,11 +88,11 @@ public class Contract implements Serializable {
         }
     }
 
-    public Float getCompensationAmount() {
+    public BigDecimal getCompensationAmount() {
         return compensationAmount;
     }
 
-    public void setCompensationAmount(Float compensationAmount) {
+    public void setCompensationAmount(BigDecimal compensationAmount) {
         if (!this.isSigned()) {
             this.compensationAmount = compensationAmount;
         }

@@ -46,7 +46,8 @@ public class BidServiceImpl implements BidService {
         Commission commission = tmpCommission.get();
 
         Bid bid = new Bid();
-        bid.setAmount(dto.amount);
+        bid.setCompensationType(dto.compensationType);
+        bid.setCompensationAmount(dto.compensationAmount);
         bid.setUser(user);
         bid.setCommission(commission);
         Bid saved = bidRepository.saveAndFlush(bid);

@@ -11,6 +11,7 @@ import baylor.csi5324.group_project.Service.Impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -67,7 +68,7 @@ public class FreelancePostingTests {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmount(30F);
+        post.setCompensationAmount(new BigDecimal("30"));
         post.setUser(user);
         post.setId(1L);
 //        post = freelancePostService.addFreelancePost(tmpPost);

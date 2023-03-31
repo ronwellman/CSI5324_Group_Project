@@ -39,7 +39,7 @@ class BidTest {
         testUser.setZip("74544");
 
         testCommission.setDeadline(LocalDate.parse("2023-01-01"));
-        testCommission.setBudget(50.00f);
+        testCommission.setBudget(new BigDecimal("50.00"));
         testCommission.setDescription("A test description");
         testCommission.setListingTitle("A test title");
 
@@ -49,7 +49,8 @@ class BidTest {
 
         testBid.setUser(testUser);
 
-        testBid.setAmount(new BigDecimal("50.01"));
+        testBid.setCompensationAmount(new BigDecimal("50.01"));
+        testBid.setCompensationType(CompensationType.ONE_TIME);
         testBid.setCommission(testCommission);
     }
 
@@ -71,7 +72,7 @@ class BidTest {
     @DisplayName("Persist Bid: Null Amount")
     void persistBid_NULLAMOUNT() {
         assertNull(testBid.getId());
-        testBid.setAmount(null);
+        testBid.setCompensationAmount(null);
 
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
@@ -80,8 +81,8 @@ class BidTest {
 
         e.getConstraintViolations()
                 .forEach(violation -> {
-                    assertEquals("amount is required", violation.getMessage());
-                    assertEquals("amount", violation.getPropertyPath().toString());
+                    assertEquals("compensation amount is required", violation.getMessage());
+                    assertEquals("compensationAmount", violation.getPropertyPath().toString());
                 });
     }
 
@@ -89,7 +90,7 @@ class BidTest {
     @DisplayName("Persist Bid: Amount Too Low")
     void persistBid_TOOLOWAMOUNT() {
         assertNull(testBid.getId());
-        testBid.setAmount(new BigDecimal("-0.01"));
+        testBid.setCompensationAmount(new BigDecimal("-0.01"));
 
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
@@ -99,7 +100,7 @@ class BidTest {
         e.getConstraintViolations()
                 .forEach(violation -> {
                     assertEquals("must be greater than or equal to 0.00", violation.getMessage());
-                    assertEquals("amount", violation.getPropertyPath().toString());
+                    assertEquals("compensationAmount", violation.getPropertyPath().toString());
                 });
     }
 

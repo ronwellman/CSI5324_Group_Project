@@ -8,6 +8,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -43,7 +44,7 @@ public class JobTests {
         commission.setListingTitle("Commission Title");
         commission.setDescription("Commission description");
         commission.setDeadline(LocalDate.parse("2023-04-27"));
-        commission.setBudget(46.87f);
+        commission.setBudget(new BigDecimal("46.87"));
 
         post = new FreelancePost();
         post.setListingTitle("Landscaping");
@@ -51,7 +52,7 @@ public class JobTests {
         post.setActive(true);
         post.setCreatedAt(Timestamp.from(Instant.now()));
         post.setCompensationType(CompensationType.HOURLY);
-        post.setCompensationAmount(30F);
+        post.setCompensationAmount(new BigDecimal("30.0"));
 
         job = new Job();
         job.setStartDate(LocalDateTime.now());

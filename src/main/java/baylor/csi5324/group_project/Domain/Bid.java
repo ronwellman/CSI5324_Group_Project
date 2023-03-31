@@ -17,9 +17,12 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull(message = "amount is required")
+    @NotNull(message = "compensation amount is required")
     @DecimalMin("0.00")
-    private BigDecimal amount;
+    private BigDecimal compensationAmount;
+
+    @NotNull(message = "compensation type is required")
+    private CompensationType compensationType;
 
     @CreationTimestamp
     @NotNull(message = "createdAt is required")
@@ -50,12 +53,12 @@ public class Bid {
         return id;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getCompensationAmount() {
+        return compensationAmount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setCompensationAmount(BigDecimal compensationAmount) {
+        this.compensationAmount = compensationAmount;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -89,4 +92,13 @@ public class Bid {
     public void setCommission(Commission commission) {
         this.commission = commission;
     }
+
+    public CompensationType getCompensationType() {
+        return compensationType;
+    }
+
+    public void setCompensationType(CompensationType compensationType) {
+        this.compensationType = compensationType;
+    }
+
 }

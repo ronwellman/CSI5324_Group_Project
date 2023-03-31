@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +36,8 @@ public class Commission implements Serializable {
     @NotNull(message = "valid user is required")
     private User user;
 
-    @OneToOne(mappedBy = "commission")
+    @JsonIgnoreProperties(value = "commission")
+    @OneToOne(mappedBy = "commission", orphanRemoval = true, cascade = CascadeType.ALL)
     private Job job;
 
     @ToString.Exclude
@@ -54,9 +57,10 @@ public class Commission implements Serializable {
     private LocalDate deadline;
 
     @NotNull(message = "Listing budget cannot be null.")
-    private Float budget;
+    @DecimalMin("0.0")
+    private BigDecimal budget;
 
-    private Boolean active = true;
+    private CommissionStatus status = CommissionStatus.OPEN;
 
     public String getDescription() {
         return description;
@@ -66,12 +70,12 @@ public class Commission implements Serializable {
         this.description = listingDescription;
     }
 
-    public Boolean getActive() {
-        return active;
+    public CommissionStatus getStatus() {
+        return status;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setStatus(CommissionStatus status) {
+        this.status = status;
     }
 
     public String getListingTitle() {
@@ -90,11 +94,11 @@ public class Commission implements Serializable {
         this.deadline = listingDeadline;
     }
 
-    public Float getBudget() {
+    public BigDecimal getBudget() {
         return budget;
     }
 
-    public void setBudget(Float listingBudget) {
+    public void setBudget(BigDecimal listingBudget) {
         this.budget = listingBudget;
     }
 

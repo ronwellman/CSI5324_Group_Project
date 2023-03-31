@@ -34,9 +34,9 @@ public class CommissionRestController {
         commissionService.deleteCommission(id);
     }
 
-    @GetMapping(value = "/active_commissions")
-    public List<Commission> getActiveCommissions() {
-        return commissionService.findActiveCommissions();
+    @GetMapping(value = "/open_commissions")
+    public List<Commission> getOpenCommissions() {
+        return commissionService.findOpenCommissions();
     }
 
     @GetMapping(value = "commissions_by_user")

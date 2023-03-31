@@ -14,7 +14,7 @@ public interface CommissionService {
 
     public Optional<Commission> findById(Long id);
 
-    public List<Commission> findActiveCommissions();
+    public List<Commission> findOpenCommissions();
 
     public List<Commission> findCommissionsByUser(Long id);
 
