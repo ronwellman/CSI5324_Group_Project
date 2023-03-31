@@ -26,7 +26,7 @@ public class CommissionRestController {
 
     @GetMapping(value = "commission")
     public Optional<Commission> getCommissionById(@RequestParam(value = "id") Long id) {
-        return commissionService.getCommissionById(id);
+        return commissionService.findById(id);
     }
 
     @PostMapping(value = "/delete_commission")
@@ -36,11 +36,11 @@ public class CommissionRestController {
 
     @GetMapping(value = "/active_commissions")
     public List<Commission> getActiveCommissions() {
-        return commissionService.getActiveCommissions();
+        return commissionService.findActiveCommissions();
     }
 
     @GetMapping(value = "commissions_by_user")
     public List<Commission> getCommissionsByUser(@RequestParam(value = "id") Long id) {
-        return commissionService.getCommissionsByUser(id);
+        return commissionService.findCommissionsByUser(id);
     }
 }

@@ -1,11 +1,13 @@
 package baylor.csi5324.group_project.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -27,6 +29,13 @@ public class Review {
     @DecimalMax("5.0")
     private BigDecimal rating;
 
+    @ToString.Exclude
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
     @ManyToOne
     @NotNull(message = "valid reviewer is required")
     @JoinColumn(name = "user_id", referencedColumnName = "id")

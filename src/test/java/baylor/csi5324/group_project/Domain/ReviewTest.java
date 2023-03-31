@@ -38,8 +38,6 @@ class ReviewTest {
         user1.setZip("90210");
 
         job = new Job();
-        job.setCreatedAt(LocalDateTime.now());
-        job.setUpdatedAt(LocalDateTime.now());
         job.setStartDate(LocalDateTime.now());
         job.setEndDate(LocalDateTime.now());
 

@@ -1,9 +1,11 @@
 package baylor.csi5324.group_project.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.Objects;
 
@@ -22,6 +24,13 @@ public class Issue {
     @NotNull(message = "issueType is required")
     private IssueType issueType;
 
+    @ToString.Exclude
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
     @ManyToOne
     @NotNull(message = "valid user is required")
     @JoinColumn(name = "user_id", referencedColumnName = "id")

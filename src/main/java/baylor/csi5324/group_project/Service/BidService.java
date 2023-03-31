@@ -11,11 +11,11 @@ import java.util.Optional;
 public interface BidService {
     public Bid addBid(BidDTO dto) throws UserException, CommissionException;
 
-    public Optional<Bid> getBidById(Long id);
+    public Optional<Bid> findById(Long id);
 
-    public List<Bid> getBidsByCommissionId(Long id) throws CommissionException;
+    public List<Bid> findBidsByCommissionId(Long id) throws CommissionException;
 
-    public List<Bid> getBidsByUserId(Long id) throws UserException;
+    public List<Bid> findBidsByUserId(Long id) throws UserException;
 
     public void deleteBid(Long id);
 }
