@@ -5,9 +5,12 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -42,13 +45,20 @@ public class FreelancePost implements Serializable {
             {
                     "freelancePosts", "messages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
-                    "commissions"
+                    "commissions", "contractsConsumer", "contractsFreelancer"
             })
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     @NotNull(message = "valid user required")
     private User user;
 
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"freelancePost, commission"})
+    @OneToMany(mappedBy = "freelancePost", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Job> jobs = new HashSet<>();
+
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = "freelancePost")
     @OneToOne
     private Job job;
 
@@ -141,5 +151,9 @@ public class FreelancePost implements Serializable {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public boolean addJob(Job job) {
+        return this.jobs.add(job);
     }
 }

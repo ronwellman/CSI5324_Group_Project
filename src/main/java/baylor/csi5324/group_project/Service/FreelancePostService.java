@@ -5,9 +5,14 @@ import baylor.csi5324.group_project.Domain.FreelancePostDTO;
 import baylor.csi5324.group_project.Domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FreelancePostService {
+    public FreelancePost save(FreelancePost freelancePost);
+
     public FreelancePost addFreelancePost(FreelancePostDTO freelancePost);
+
+    public Optional<FreelancePost> findById(Long id);
 
     public void deleteFreelancePost(Long id);
 

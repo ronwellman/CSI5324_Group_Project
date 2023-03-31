@@ -32,12 +32,12 @@ public class BidServiceImpl implements BidService {
     @Override
     @Transactional
     public Bid addBid(BidDTO dto) throws UserException, CommissionException {
-        Optional<User> tmpUser = userService.getUserById(dto.userId);
+        Optional<User> tmpUser = userService.findById(dto.userId);
         if (tmpUser.isEmpty()) {
             throw new UserException("invalid user id");
         }
 
-        Optional<Commission> tmpCommission = commissionService.getCommissionById(dto.commissionId);
+        Optional<Commission> tmpCommission = commissionService.findById(dto.commissionId);
         if (tmpCommission.isEmpty()) {
             throw new CommissionException("invalid commission id");
         }
@@ -61,13 +61,13 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public Optional<Bid> getBidById(Long id) {
+    public Optional<Bid> findById(Long id) {
         return bidRepository.findById(id);
     }
 
     @Override
-    public List<Bid> getBidsByCommissionId(Long id) throws CommissionException {
-        Optional<Commission> commission = commissionService.getCommissionById(id);
+    public List<Bid> findBidsByCommissionId(Long id) throws CommissionException {
+        Optional<Commission> commission = commissionService.findById(id);
         if (commission.isEmpty()) {
             throw new CommissionException("invalid commission id");
         }
@@ -75,8 +75,8 @@ public class BidServiceImpl implements BidService {
     }
 
     @Override
-    public List<Bid> getBidsByUserId(Long id) throws UserException {
-        Optional<User> user = userService.getUserById(id);
+    public List<Bid> findBidsByUserId(Long id) throws UserException {
+        Optional<User> user = userService.findById(id);
         if (user.isEmpty()) {
             throw new UserException("invalid user id");
         }
@@ -85,7 +85,7 @@ public class BidServiceImpl implements BidService {
 
     @Override
     public void deleteBid(Long id) {
-        
+
         bidRepository.deleteById(id);
     }
 }

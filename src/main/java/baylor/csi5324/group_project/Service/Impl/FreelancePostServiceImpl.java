@@ -25,8 +25,13 @@ public class FreelancePostServiceImpl implements FreelancePostService {
         this.userService = userService;
     }
 
+    @Override
+    public FreelancePost save(FreelancePost freelancePost) {
+        return freelanceRepository.saveAndFlush(freelancePost);
+    }
+
     public FreelancePost addFreelancePost(FreelancePostDTO dto) {
-        Optional<User> user = userService.getUserById(dto.userId);
+        Optional<User> user = userService.findById(dto.userId);
         if (user.isEmpty()) {
             return null;
         }
@@ -49,6 +54,11 @@ public class FreelancePostServiceImpl implements FreelancePostService {
         userService.save(user.get());
 
         return saved;
+    }
+
+    @Override
+    public Optional<FreelancePost> findById(Long id) {
+        return freelanceRepository.findById(id);
     }
 
     @Override

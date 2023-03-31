@@ -33,7 +33,7 @@ public class Bid {
             {
                     "freelancePosts", "messages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
-                    "commissions"
+                    "commissions", "contractsConsumer", "contractsFreelancer"
             })
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

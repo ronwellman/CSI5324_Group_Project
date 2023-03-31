@@ -13,12 +13,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
-public class FreelanceServiceRestController {
+public class FreelancePostRestController {
 
     private final FreelancePostService freelancePostService;
     private final UserService userService;
 
-    public FreelanceServiceRestController(FreelancePostService freelancePostService, UserService userService) {
+    public FreelancePostRestController(FreelancePostService freelancePostService, UserService userService) {
         this.freelancePostService = freelancePostService;
         this.userService = userService;
     }
@@ -40,7 +40,7 @@ public class FreelanceServiceRestController {
 
     @GetMapping(value = "/posts_by_user")
     public List<FreelancePost> getPostsByUserId(@RequestParam(value = "id") Long id) {
-        Optional<User> user = userService.getUserById(id);
+        Optional<User> user = userService.findById(id);
         if (user.isEmpty()) {
             return null;
         }

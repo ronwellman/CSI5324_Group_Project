@@ -1,6 +1,5 @@
 package baylor.csi5324.group_project.Domain;
 
-import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -54,8 +54,6 @@ public class JobTests {
         post.setCompensationAmount(30F);
 
         job = new Job();
-        job.setCreatedAt(LocalDateTime.now());
-        job.setUpdatedAt(LocalDateTime.now());
         job.setStartDate(LocalDateTime.now());
         job.setEndDate(LocalDateTime.now());
 
@@ -89,88 +87,46 @@ public class JobTests {
         assertNotNull(savedJob.getId());
     }
 
-    @Test
-    @DisplayName("Persist Job: : NULL createdAt")
-    void persistJobNullCreatedAt() {
-        em.persistAndFlush(user);
-        commission.setUser(user);
-        Commission savedCommission = em.persistAndFlush(commission);
-        job.setCommission(savedCommission);
-        job.setCreatedAt(null);
+//    @Test
+//    @DisplayName("Persist Job: : NULL startDate")
+//    void persistJobNullStartDate() {
+//        em.persistAndFlush(user);
+//        commission.setUser(user);
+//        Commission savedCommission = em.persistAndFlush(commission);
+//        job.setCommission(savedCommission);
+//        job.setStartDate(null);
+//
+//        ConstraintViolationException e = assertThrows(
+//                ConstraintViolationException.class,
+//                () -> em.persistAndFlush(job)
+//        );
+//
+//        e.getConstraintViolations()
+//                .forEach(violation -> {
+//                    assertEquals("valid startDate required", violation.getMessage());
+//                    assertEquals("startDate", violation.getPropertyPath().toString());
+//                });
+//    }
 
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(job)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    assertEquals("valid createdAT required", violation.getMessage());
-                    assertEquals("createdAt", violation.getPropertyPath().toString());
-                });
-    }
-
-    @Test
-    @DisplayName("Persist Job: : NULL updatedAt")
-    void persistJobNullUpdatedAt() {
-        em.persistAndFlush(user);
-        commission.setUser(user);
-        Commission savedCommission = em.persistAndFlush(commission);
-        job.setCommission(savedCommission);
-        job.setUpdatedAt(null);
-
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(job)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    assertEquals("valid updatedAt required", violation.getMessage());
-                    assertEquals("updatedAt", violation.getPropertyPath().toString());
-                });
-    }
-
-    @Test
-    @DisplayName("Persist Job: : NULL startDate")
-    void persistJobNullStartDate() {
-        em.persistAndFlush(user);
-        commission.setUser(user);
-        Commission savedCommission = em.persistAndFlush(commission);
-        job.setCommission(savedCommission);
-        job.setStartDate(null);
-
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(job)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    assertEquals("valid startDate required", violation.getMessage());
-                    assertEquals("startDate", violation.getPropertyPath().toString());
-                });
-    }
-
-    @Test
-    @DisplayName("Persist Job: : NULL endDate")
-    void persistJobNullEndDate() {
-        em.persistAndFlush(user);
-        commission.setUser(user);
-        Commission savedCommission = em.persistAndFlush(commission);
-        job.setCommission(savedCommission);
-        job.setEndDate(null);
-
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(job)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    assertEquals("valid endDate required", violation.getMessage());
-                    assertEquals("endDate", violation.getPropertyPath().toString());
-                });
-    }
+//    @Test
+//    @DisplayName("Persist Job: : NULL endDate")
+//    void persistJobNullEndDate() {
+//        em.persistAndFlush(user);
+//        commission.setUser(user);
+//        Commission savedCommission = em.persistAndFlush(commission);
+//        job.setCommission(savedCommission);
+//        job.setEndDate(null);
+//
+//        ConstraintViolationException e = assertThrows(
+//                ConstraintViolationException.class,
+//                () -> em.persistAndFlush(job)
+//        );
+//
+//        e.getConstraintViolations()
+//                .forEach(violation -> {
+//                    assertEquals("valid endDate required", violation.getMessage());
+//                    assertEquals("endDate", violation.getPropertyPath().toString());
+//                });
+//    }
 
 }

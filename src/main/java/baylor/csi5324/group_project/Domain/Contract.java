@@ -1,80 +1,147 @@
 package baylor.csi5324.group_project.Domain;
 
+import baylor.csi5324.group_project.Exceptions.ContractException;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
-import java.io.Serializable;
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Contract implements Serializable{
+public class Contract implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private boolean proofOfSignature;
+    private boolean proofOfSignature = false;
 
-    @NotNull(message="valid timestamp required")
-    private LocalDate timestamp;
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @NotNull(message = "compensation type is required")
+    private CompensationType compensationType;
+
+    @NotNull(message = "compensation amount is required")
+    private Float compensationAmount;
+
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = "contract")
     @OneToOne
     private Job job;
 
+    @ToString.Exclude
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    @JoinColumn(name = "freelancer_id")
+    private User freelancer;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "messages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
+    @JoinColumn(name = "consumer_id")
+    private User consumer;
 
     @OneToOne
     private Payment payment;
 
-    //Getters
-    public boolean getProofOfSignature(){
-        return proofOfSignature;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public LocalDate getTimestamp() {
-        return timestamp;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public Job getJob(){
+    public CompensationType getCompensationType() {
+        return compensationType;
+    }
+
+    public void setCompensationType(CompensationType compensationType) {
+        if (!this.isSigned()) {
+            this.compensationType = compensationType;
+        }
+    }
+
+    public Float getCompensationAmount() {
+        return compensationAmount;
+    }
+
+    public void setCompensationAmount(Float compensationAmount) {
+        if (!this.isSigned()) {
+            this.compensationAmount = compensationAmount;
+        }
+    }
+
+    public Job getJob() {
         return job;
     }
 
-    public User getUser(){
-        return user;
-    }
-
-    public Payment getPayment(){
+    public Payment getPayment() {
         return payment;
     }
 
-    // Setters
-    public void setProofOfSignature(boolean isSigned){
+    public boolean isSigned() {
+        return this.proofOfSignature;
+    }
+
+    public void setProofOfSignature(boolean isSigned) throws ContractException {
+        if (!this.proofOfSignature) {
+            if (null == this.job) {
+                throw new ContractException("job is required before signature");
+            }
+
+            if (null == this.job.getEndDate() || null == this.job.getStartDate()) {
+                throw new ContractException("start and end date for job cannot be empty");
+            }
+        }
+
         this.proofOfSignature = isSigned;
     }
 
-    public void setTimestamp(LocalDate contractTimestamp){
-        this.timestamp = contractTimestamp;
-    }
-
-    public void setJob(Job associatedJob){
+    public void setJob(Job associatedJob) {
         this.job = associatedJob;
     }
 
-    public void setUser(User userUploadingContract){
-        this.user = userUploadingContract;
-    }
-
-    public void setPayment(Payment contractPayment){
+    public void setPayment(Payment contractPayment) {
         this.payment = contractPayment;
     }
 
+    public User getFreelancer() {
+        return freelancer;
+    }
+
+    public void setFreelancer(User freelancer) {
+        this.freelancer = freelancer;
+    }
+
+    public User getConsumer() {
+        return consumer;
+    }
+
+    public void setConsumer(User consumer) {
+        this.consumer = consumer;
+    }
 }

@@ -1,5 +1,6 @@
 package baylor.csi5324.group_project.Domain;
 
+import baylor.csi5324.group_project.Exceptions.ContractException;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
@@ -22,36 +22,48 @@ public class ContractTests {
 
     Contract contract;
     Job job;
-    User user;
+    User consumer;
+    User freelancer;
 
     @BeforeEach
-    void createNewContract() {
+    void createNewContract() throws ContractException {
         contract = new Contract();
         job = new Job();
-        user = new User();
+        consumer = new User();
+        freelancer = new User();
 
-        contract.setProofOfSignature(false);
-        contract.setTimestamp(LocalDate.now());
-
-        job.setCreatedAt(LocalDateTime.parse("2023-02-18T12:34:05"));
-        job.setUpdatedAt(LocalDateTime.parse("2023-02-19T11:55:07"));
         job.setStartDate(LocalDateTime.parse("2023-02-20T00:00:00"));
         job.setEndDate(LocalDateTime.parse("2023-02-28T00:00:00"));
 
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setStreet("Main Street");
-        user.setCity("Chicago");
-        user.setState("IL");
-        user.setZip("12345");
-        user.setEmail("john.doe@gmail.com");
-        user.setPhone("123-456-7899");
+        contract.setJob(job);
+        contract.setProofOfSignature(false);
+        contract.setCompensationAmount(100.00F);
+        contract.setCompensationType(CompensationType.ONE_TIME);
+
+        consumer.setFirstName("John");
+        consumer.setLastName("Doe");
+        consumer.setStreet("Main Street");
+        consumer.setCity("Chicago");
+        consumer.setState("IL");
+        consumer.setZip("12345");
+        consumer.setEmail("john.doe@gmail.com");
+        consumer.setPhone("123-456-7899");
+
+        freelancer.setFirstName("John");
+        freelancer.setLastName("Doe2");
+        freelancer.setStreet("Main Street");
+        freelancer.setCity("Chicago");
+        freelancer.setState("IL");
+        freelancer.setZip("12345");
+        freelancer.setEmail("john.doe2@gmail.com");
+        freelancer.setPhone("123-456-7899");
 
         em.persistAndFlush(job);
-        em.persistAndFlush(user);
+        em.persistAndFlush(consumer);
+        em.persistAndFlush(freelancer);
 
-        contract.setJob(job);
-        contract.setUser(user);
+        contract.setConsumer(consumer);
+        contract.setFreelancer(freelancer);
     }
 
     @Test
@@ -63,20 +75,37 @@ public class ContractTests {
         assertNotNull(savedContract.getId());
         assertEquals(contract, savedContract);
         assertEquals(contract.getJob(), savedContract.getJob());
-        assertEquals(contract.getUser(), savedContract.getUser());
+        assertEquals(contract.getConsumer(), savedContract.getConsumer());
+        assertEquals(contract.getFreelancer(), savedContract.getFreelancer());
     }
 
     @Test
-    void nullTimestamp() {
+    void nullCompensationType() {
         assertNull(contract.getId());
-        contract.setTimestamp(null);
+        contract.setCompensationType(null);
 
         ConstraintViolationException e = assertThrows(
                 ConstraintViolationException.class,
                 () -> em.persistAndFlush(contract)
         );
 
-        String expectedMessageNull = "valid timestamp required";
+        String expectedMessageNull = "compensation type is required";
+        String actualMessage = e.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessageNull));
+    }
+
+    @Test
+    void nullCompensationAmount() {
+        assertNull(contract.getId());
+        contract.setCompensationAmount(null);
+
+        ConstraintViolationException e = assertThrows(
+                ConstraintViolationException.class,
+                () -> em.persistAndFlush(contract)
+        );
+
+        String expectedMessageNull = "compensation amount is required";
         String actualMessage = e.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessageNull));

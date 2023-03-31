@@ -34,13 +34,13 @@ public class BidRestController {
 
     @GetMapping(value = "/bid")
     public ResponseEntity<Bid> getBidById(@RequestParam(value = "id") Long id) {
-        return new ResponseEntity(bidService.getBidById(id), HttpStatus.OK);
+        return new ResponseEntity(bidService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/bids_by_commission")
     public ResponseEntity<List<Bid>> getBidsByCommissionId(@RequestParam(value = "id") Long id) {
         try {
-            return new ResponseEntity(bidService.getBidsByCommissionId(id), HttpStatus.OK);
+            return new ResponseEntity(bidService.findBidsByCommissionId(id), HttpStatus.OK);
         } catch (CommissionException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -49,7 +49,7 @@ public class BidRestController {
     @GetMapping(value = "/bids_by_user")
     public ResponseEntity<List<Bid>> getBidsByUserId(@RequestParam(value = "id") Long id) {
         try {
-            return new ResponseEntity(bidService.getBidsByUserId(id), HttpStatus.OK);
+            return new ResponseEntity(bidService.findBidsByUserId(id), HttpStatus.OK);
         } catch (UserException e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

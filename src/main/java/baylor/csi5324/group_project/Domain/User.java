@@ -50,7 +50,9 @@ public class User implements Serializable {
     @OneToMany
     private Set<Message> messages = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Notification> notifications = new HashSet<>();
 
     @ToString.Exclude
@@ -63,16 +65,29 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Bid> bids = new HashSet<>();
 
-    @OneToMany(mappedBy = "reviewer")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = "reviewer")
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Issue> issues = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    private Set<Contract> contracts = new HashSet<>();
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"freelancer"})
+    @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Contract> contractsFreelancer = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"consumer"})
+    @OneToMany(mappedBy = "consumer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Contract> contractsConsumer = new HashSet<>();
+
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"user"})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Payment> payments = new HashSet<>();
 
     @Override
@@ -178,5 +193,13 @@ public class User implements Serializable {
 
     public boolean addBid(Bid bid) {
         return this.bids.add(bid);
+    }
+
+    public boolean addFreelanceContract(Contract contract) {
+        return this.contractsFreelancer.add(contract);
+    }
+
+    public boolean addConsumerContract(Contract contract) {
+        return this.contractsConsumer.add(contract);
     }
 }

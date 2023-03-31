@@ -27,7 +27,7 @@ public class Commission implements Serializable {
             {
                     "freelancePosts", "messages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
-                    "commissions"
+                    "commissions", "contractsConsumer", "contractsFreelancer"
             })
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -12,11 +12,11 @@ public interface CommissionService {
 
     public Commission addCommission(CommissionDTO dto);
 
-    public Optional<Commission> getCommissionById(Long id);
+    public Optional<Commission> findById(Long id);
 
-    public List<Commission> getActiveCommissions();
+    public List<Commission> findActiveCommissions();
 
-    public List<Commission> getCommissionsByUser(Long id);
+    public List<Commission> findCommissionsByUser(Long id);
 
     public void deleteCommission(Long id);
 }
