@@ -16,8 +16,9 @@ public class FreelancePostDTO implements Serializable {
     public Boolean active;
 
     @NotNull(message = "compensation amount required")
-
     public CompensationType compensationType;
+
+    @NotNull(message = "compensationAmount is required")
     public BigDecimal compensationAmount;
 
     @NotNull(message = "user id required")

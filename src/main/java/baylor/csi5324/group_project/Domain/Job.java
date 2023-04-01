@@ -43,8 +43,8 @@ public class Job {
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"job"})
-    @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Review> reviews = new HashSet<>();
+    @OneToOne(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Review review;
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"job"})
@@ -118,12 +118,12 @@ public class Job {
         this.artifacts.add(artifact);
     }
 
-    public Set<Review> getReviews() {
-        return reviews;
+    public Review getReview() {
+        return review;
     }
 
-    public void addReview(Review review) {
-        this.reviews.add(review);
+    public void setReview(Review review) {
+        this.review = review;
     }
 
     public Set<Issue> getIssues() {
