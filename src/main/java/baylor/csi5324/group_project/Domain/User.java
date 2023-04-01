@@ -202,4 +202,8 @@ public class User implements Serializable {
     public boolean addConsumerContract(Contract contract) {
         return this.contractsConsumer.add(contract);
     }
+
+    public boolean addReview(Review review) {
+        return this.reviews.add(review);
+    }
 }

@@ -41,9 +41,11 @@ public class Review {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User reviewer;
 
-    @ManyToOne
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = "review")
+    @OneToOne
     @NotNull(message = "valid job is required")
-    @JoinColumn(name = "job_id", referencedColumnName = "id")
+    @JoinColumn(name = "job_id")
     private Job job;
 
     @Override
