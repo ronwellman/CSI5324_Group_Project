@@ -1,16 +1,17 @@
 package baylor.csi5324.group_project.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.Objects;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "messages", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
@@ -21,22 +22,35 @@ public class Message implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "sentMessages", "receivedMessages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sender_id")
     @NotNull(message = "valid sender required")
     private User sender;
 
-    @ManyToOne
+    @JsonIgnoreProperties(value =
+            {
+                    "freelancePosts", "sentMessages", "receivedMessages", "notifications",
+                    "bids", "reviews", "issues", "payments", "contracts",
+                    "commissions", "contractsConsumer", "contractsFreelancer"
+            })
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "receiver_id")
     @NotNull(message = "valid receiver required")
     private User receiver;
 
     @NotNull(message = "a message is required")
     private String message;
 
+    private String subject;
 
-    @NotNull(message = "send time required")
-    private Timestamp sendTime;
+    private Timestamp sendTime = Timestamp.from(Instant.now());
 
-    @NotNull(message = "valid read status required")
     private Boolean read = false;
 
     private Timestamp readTime;
@@ -48,11 +62,67 @@ public class Message implements Serializable {
 
         Message message = (Message) o;
 
-        return id.equals(message.id);
+        return Objects.equals(id, message.id);
     }
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id != null ? id.hashCode() : 0;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public void setSender(User sender) {
+        this.sender = sender;
+    }
+
+    public User getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(User receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Boolean getRead() {
+        return read;
+    }
+
+    public void setRead(Boolean read) {
+        this.read = read;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Timestamp getSendTime() {
+        return sendTime;
+    }
+
+    public Timestamp getReadTime() {
+        return readTime;
+    }
+
+    public void setReadTime(Timestamp readTime) {
+        this.readTime = readTime;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 }
