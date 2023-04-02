@@ -1,5 +1,6 @@
 package baylor.csi5324.group_project.Domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -44,49 +45,67 @@ public class User implements Serializable {
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<FreelancePost> freelancePosts = new HashSet<>();
 
-    @OneToMany
-    private Set<Message> messages = new HashSet<>();
+    @ToString.Exclude
+    @JsonIgnoreProperties({"sender", "receiver"})
+    @JsonIgnore
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> sentMessages = new HashSet<>();
+
+    @ToString.Exclude
+    @JsonIgnoreProperties({"sender", "receiver"})
+    @JsonIgnore
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Message> receivedMessages = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     Set<Notification> notifications = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Commission> commissions = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Bid> bids = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = "reviewer")
+    @JsonIgnore
     @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = "user")
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Issue> issues = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"freelancer"})
+    @JsonIgnore
     @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contract> contractsFreelancer = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"consumer"})
+    @JsonIgnore
     @OneToMany(mappedBy = "consumer", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Contract> contractsConsumer = new HashSet<>();
 
     @ToString.Exclude
     @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Payment> payments = new HashSet<>();
 
@@ -205,5 +224,53 @@ public class User implements Serializable {
 
     public boolean addReview(Review review) {
         return this.reviews.add(review);
+    }
+
+    public boolean addSentMessages(Message message) {
+        return this.sentMessages.add(message);
+    }
+
+    public boolean addReceivedMessages(Message message) {
+        return this.receivedMessages.add(message);
+    }
+
+    public Set<Message> getSentMessages() {
+        return sentMessages;
+    }
+
+    public Set<Message> getReceivedMessages() {
+        return receivedMessages;
+    }
+
+    public Set<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public Set<Commission> getCommissions() {
+        return commissions;
+    }
+
+    public Set<Bid> getBids() {
+        return bids;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public Set<Issue> getIssues() {
+        return issues;
+    }
+
+    public Set<Contract> getContractsFreelancer() {
+        return contractsFreelancer;
+    }
+
+    public Set<Contract> getContractsConsumer() {
+        return contractsConsumer;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
     }
 }

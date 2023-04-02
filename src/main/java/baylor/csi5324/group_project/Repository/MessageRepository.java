@@ -13,7 +13,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 
     public List<Message> findByReceiver(User user);
 
-    public List<Message> findByReceiverAndRead(User user, Boolean read);
+    public List<Message> findByReceiverAndRead(User receiver, Boolean read);
 
 
 }

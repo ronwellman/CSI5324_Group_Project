@@ -51,7 +51,7 @@ public class Contract implements Serializable {
     @ToString.Exclude
     @JsonIgnoreProperties(value =
             {
-                    "freelancePosts", "messages", "notifications",
+                    "freelancePosts", "sentMessages", "receivedMessages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
                     "commissions", "contractsConsumer", "contractsFreelancer"
             })
@@ -62,7 +62,7 @@ public class Contract implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value =
             {
-                    "freelancePosts", "messages", "notifications",
+                    "freelancePosts", "sentMessages", "receivedMessages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
                     "commissions", "contractsConsumer", "contractsFreelancer"
             })

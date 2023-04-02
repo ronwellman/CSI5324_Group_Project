@@ -10,9 +10,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
-import java.sql.Timestamp;
-import java.time.Instant;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
@@ -51,7 +48,6 @@ public class MessageTests {
         message = new Message();
         message.setMessage("Meet me at the Pizza Palace at 4pm");
         message.setRead(false);
-        message.setSendTime(Timestamp.from(Instant.now()));
     }
 
     @Test
@@ -103,46 +99,6 @@ public class MessageTests {
                 .forEach(violation -> {
                     Assertions.assertEquals("valid receiver required", violation.getMessage());
                     Assertions.assertEquals("receiver", violation.getPropertyPath().toString());
-                });
-    }
-
-    @Test
-    @DisplayName("Persist Message: NULL sendTime")
-    void persistMessageSendTimeNULL() {
-        em.persistAndFlush(user1);
-        em.persistAndFlush(user2);
-        message.setSender(user1);
-        message.setReceiver(user2);
-        message.setSendTime(null);
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(message)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    Assertions.assertEquals("send time required", violation.getMessage());
-                    Assertions.assertEquals("sendTime", violation.getPropertyPath().toString());
-                });
-    }
-
-    @Test
-    @DisplayName("Persist Message: NULL read")
-    void persistMessageReadNULL() {
-        em.persistAndFlush(user1);
-        em.persistAndFlush(user2);
-        message.setSender(user1);
-        message.setReceiver(user2);
-        message.setRead(null);
-        ConstraintViolationException e = assertThrows(
-                ConstraintViolationException.class,
-                () -> em.persistAndFlush(message)
-        );
-
-        e.getConstraintViolations()
-                .forEach(violation -> {
-                    Assertions.assertEquals("valid read status required", violation.getMessage());
-                    Assertions.assertEquals("read", violation.getPropertyPath().toString());
                 });
     }
 

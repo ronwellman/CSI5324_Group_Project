@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Service;
 
 import baylor.csi5324.group_project.Domain.Message;
 import baylor.csi5324.group_project.Domain.User;
+import baylor.csi5324.group_project.Exceptions.UserException;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class MessageTests {
 
     @Test
     @Order(3)
-    void createMessage() {
+    void createMessage() throws UserException {
         User user1 = new User();
         user1.setFirstName("Albert");
         user1.setLastName("Slater");
@@ -53,11 +54,10 @@ public class MessageTests {
         message.setRead(false);
         message.setSender(user1);
         message.setReceiver(user2);
-        message.setSendTime(Timestamp.from(Instant.now()));
 
         Message savedMessage1 = messageService.save(message);
 
-        List<Message> unread1 = messageService.findAllUnread(user2);
+        List<Message> unread1 = messageService.findAllUnreadMessages(user2.getId());
 
         assert (!unread1.isEmpty());
         assertEquals(savedMessage1, unread1.get(0));
@@ -66,7 +66,7 @@ public class MessageTests {
         savedMessage1.setReadTime(Timestamp.from(Instant.now()));
         Message savedMessage2 = messageService.save(savedMessage1);
 
-        List<Message> unread2 = messageService.findAllUnread(user2);
+        List<Message> unread2 = messageService.findAllUnreadMessages(user2.getId());
         assert (unread2.isEmpty());
 
 

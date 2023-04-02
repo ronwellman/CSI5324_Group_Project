@@ -46,7 +46,7 @@ public class FreelancePost implements Serializable {
 
     @JsonIgnoreProperties(value =
             {
-                    "freelancePosts", "messages", "notifications",
+                    "freelancePosts", "sentMessages", "receivedMessages", "notifications",
                     "bids", "reviews", "issues", "payments", "contracts",
                     "commissions", "contractsConsumer", "contractsFreelancer"
             })
