@@ -22,6 +22,7 @@ public class UserTests {
     @BeforeEach
     void setup() {
         user = new User();
+        user.setPassword("password");
         user.setFirstName("Albert");
         user.setLastName("Slater");
         user.setStreet("123 Bayside Dr");

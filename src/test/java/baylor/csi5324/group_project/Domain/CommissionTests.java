@@ -27,7 +27,7 @@ public class CommissionTests {
     void createNewCommission() {
 
         testUser = new User();
-
+        testUser.setPassword("password");
         testUser.setCity("Test City");
         testUser.setEmail("TestEmail@Email.com");
         testUser.setFirstName("TestName");

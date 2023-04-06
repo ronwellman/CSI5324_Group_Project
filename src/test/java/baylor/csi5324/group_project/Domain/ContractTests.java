@@ -40,6 +40,7 @@ public class ContractTests {
         contract.setCompensationAmount(new BigDecimal("100.00"));
         contract.setCompensationType(CompensationType.ONE_TIME);
 
+        consumer.setPassword("password");
         consumer.setFirstName("John");
         consumer.setLastName("Doe");
         consumer.setStreet("Main Street");
@@ -49,6 +50,7 @@ public class ContractTests {
         consumer.setEmail("john.doe@gmail.com");
         consumer.setPhone("123-456-7899");
 
+        freelancer.setPassword("password");
         freelancer.setFirstName("John");
         freelancer.setLastName("Doe2");
         freelancer.setStreet("Main Street");

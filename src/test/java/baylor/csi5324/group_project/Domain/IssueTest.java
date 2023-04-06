@@ -27,6 +27,7 @@ class IssueTest {
     @BeforeEach
     void setUp() {
         user1 = new User();
+        user1.setPassword("password");
         user1.setFirstName("Albert");
         user1.setLastName("Slater");
         user1.setStreet("123 Bayside Dr");

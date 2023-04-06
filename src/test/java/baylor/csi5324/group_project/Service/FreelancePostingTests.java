@@ -10,6 +10,7 @@ import baylor.csi5324.group_project.Service.Impl.FreelancePostServiceImpl;
 import baylor.csi5324.group_project.Service.Impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -27,6 +28,7 @@ import static org.mockito.Mockito.*;
 public class FreelancePostingTests {
 
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
     private FreelancePostRepository freelancePostRepository;
     private UserServiceImpl userService;
     private FreelancePostServiceImpl freelancePostService;
@@ -37,7 +39,7 @@ public class FreelancePostingTests {
     @Before
     public void setupMock() {
         userRepository = mock(UserRepository.class);
-        userService = new UserServiceImpl(userRepository);
+        userService = new UserServiceImpl(userRepository, passwordEncoder);
         freelancePostRepository = mock(FreelancePostRepository.class);
         freelancePostService = new FreelancePostServiceImpl(freelancePostRepository, userService);
     }
@@ -45,11 +47,13 @@ public class FreelancePostingTests {
     @BeforeEach
     void setUp() {
         userRepository = mock(UserRepository.class);
-        userService = new UserServiceImpl(userRepository);
+
+        userService = new UserServiceImpl(userRepository, passwordEncoder);
         freelancePostRepository = mock(FreelancePostRepository.class);
         freelancePostService = new FreelancePostServiceImpl(freelancePostRepository, userService);
 
         user = new User();
+        user.setPassword("password");
         user.setFirstName("Albert");
         user.setLastName("Slater");
         user.setStreet("123 Bayside Dr");

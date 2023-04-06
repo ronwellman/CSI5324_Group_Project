@@ -10,8 +10,13 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"id", "email"})})
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
     @Id
     @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,6 +46,18 @@ public class User implements Serializable {
     @Email(message = "valid email required")
     @NotNull(message = "valid email required")
     private String email;
+
+    @NotNull(message = "password is required")
+    @JsonIgnore
+    private String password;
+
+    private final String role = "User";
+
+    private Boolean active = true;
+    private Boolean expired = false;
+    private Boolean locked = false;
+    private Boolean credentialExpired = false;
+
     private String phone;
 
     @ToString.Exclude
@@ -272,5 +289,84 @@ public class User implements Serializable {
 
     public Set<Payment> getPayments() {
         return payments;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getExpired() {
+        return expired;
+    }
+
+    public void setExpired(Boolean expired) {
+        this.expired = expired;
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
+    }
+
+    public Boolean getCredentialExpired() {
+        return credentialExpired;
+    }
+
+    public void setCredentialExpired(Boolean credentialExpired) {
+        this.credentialExpired = credentialExpired;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    @Override
+    @Transient
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonExpired() {
+        return !expired;
+    }
+
+    @Override
+    @Transient
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    @Transient
+    public boolean isCredentialsNonExpired() {
+        return !credentialExpired;
+    }
+
+    @Override
+    @Transient
+    public boolean isEnabled() {
+        return active;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }
