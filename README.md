@@ -3,3 +3,18 @@
 # Freelancer Service
 
 *CSI 5324 Spring '23 trimester.*
+
+
+## React Setup
+```
+npx create-react-app@5 app
+```
+
+```
+cd app
+npm i bootstrap@5 react-cookie@4 react-router-dom@6 reactstrap@9
+```
+
+```
+npm install --save-dev @babel/preset-react
+```

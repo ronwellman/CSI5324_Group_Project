@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class MessageRestController {
 
     private final MessageService messageService;

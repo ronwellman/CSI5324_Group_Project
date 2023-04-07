@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:8080")
 public class JobRestController {
 
     private final JobService jobService;

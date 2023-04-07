@@ -1,13 +1,23 @@
-import "../style/App.css"
+// import React, { useState } from "react";
+// import Header from "../pages/Header"
+// import Footer from "../pages/Footer"
+// import Login from "../pages/Login";
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import "../styles/styles.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Test</h1>
-      </header>
-    </div>
-  );
-}
+// var loggedIn = false;
 
-export default App;
+// function App() {
+
+//   const {loginState, setLoginState} = useState(loggedIn)
+
+//   return (
+//     <React.StrictMode>
+//       <Header login={loginState}, setLoginState={setLoginState} />
+//       <Login login={{loginState, setLoginState}} />
+//       <Footer />
+//     </React.StrictMode>
+//   );
+// }
+
+// export default App;

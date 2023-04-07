@@ -2,6 +2,7 @@ package baylor.csi5324.group_project.Domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,10 +33,12 @@ public class User implements Serializable, UserDetails {
 
     @NotNull(message = "firstName is required")
     @NotBlank(message = "firstName is required")
+    @Column(name = "firstname")
     private String firstName;
 
     @NotNull(message = "lastName is required")
     @NotBlank(message = "lastName is required")
+    @Column(name = "lastname")
     private String lastName;
     private String street;
     private String city;
@@ -48,7 +51,7 @@ public class User implements Serializable, UserDetails {
     private String email;
 
     @NotNull(message = "password is required")
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     private final String role = "User";

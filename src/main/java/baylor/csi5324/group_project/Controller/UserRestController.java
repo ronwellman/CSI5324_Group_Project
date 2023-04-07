@@ -3,13 +3,11 @@ package baylor.csi5324.group_project.Controller;
 import baylor.csi5324.group_project.Domain.User;
 import baylor.csi5324.group_project.Service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserRestController {
 
     private final UserService userService;
@@ -18,9 +16,11 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/new_user")
+    @PostMapping(value = "/new_user", consumes = {"application/json"})
+    @CrossOrigin(origins = "http://localhost:3000")
     public User addUser(@Valid @RequestBody User user) {
-        return userService.save(user);
+        System.out.println(user);
+        return userService.newUser(user);
     }
 
 }
