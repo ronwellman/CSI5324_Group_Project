@@ -129,6 +129,12 @@ public class User implements Serializable, UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Payment> payments = new HashSet<>();
 
+    @ToString.Exclude
+    @JsonIgnoreProperties(value = {"user"})
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Token> tokens = new HashSet<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -254,6 +260,14 @@ public class User implements Serializable, UserDetails {
         return this.receivedMessages.add(message);
     }
 
+    public boolean addToken(Token token) {
+        return this.tokens.add(token);
+    }
+
+    public Set<Token> getTokens() {
+        return tokens;
+    }
+
     public Set<Message> getSentMessages() {
         return sentMessages;
     }
@@ -368,6 +382,7 @@ public class User implements Serializable, UserDetails {
         return active;
     }
 
+    // using email rather than username as unique value
     @Override
     public String getUsername() {
         return email;

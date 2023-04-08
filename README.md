@@ -4,6 +4,8 @@
 
 *CSI 5324 Spring '23 trimester.*
 
+## JWT
+Authentication is via username and password. This produces a Java Web Token (JWT) that is used in future requests.  The authentication code to do this is a 95% copy of: [https://github.com/ali-bouali/spring-boot-3-jwt-security](https://github.com/ali-bouali/spring-boot-3-jwt-security) with very few modifications. 
 
 ## React Setup
 ```
