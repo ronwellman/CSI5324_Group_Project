@@ -2,7 +2,7 @@ import React from "react"
 
 import { Outlet, Link } from "react-router-dom";
 
-const  Header = (params) => {
+const  Header = ({loggedInState, setLoggedInState}) => {
 	return (
 		<>
 		<div className="row banner">
@@ -19,7 +19,8 @@ const  Header = (params) => {
 					<div>Link3</div>
 				</div>
 				<div className="col-md-auto">
-				{ params.loggedIn ? <div>Logout</div> : <div><Link to="/Login">Login</Link></div> } 
+				{/* { loggedInState ? <div>Logout</div> : <div><Link to="/Login">Login</Link></div> }  */}
+				{ loggedInState }
 					
 				</div>
 		</div>
