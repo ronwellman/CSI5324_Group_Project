@@ -1,63 +1,70 @@
-import React, { useState } from 'react'
-import axios, { HttpStatusCode } from 'axios';
-import Logout from './Logout';
-import { Link } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../styles/styles.css'
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/styles.css";
+import { GlobalContext } from "../context/GlobalState";
+import doLogin from "../api/Login";
 
+const Login = () => {
+  const navigate = useNavigate();
 
-const Login = (setLoggedInState) => {
+  const { setEmail, setLoggedIn, setBearer, setRefresh } =
+    useContext(GlobalContext);
 
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+  const [email, updateEmail] = useState("");
+  const [password, updatePassword] = useState("");
 
-	const handleLogin = async (event) => {
-		event.preventDefault();
-		console.log("handleLogin called: " + email + " " + password);
-		event.preventDefault();
-	
-		await axios.post('/api/login', { email, password })
-		.then( (response) => {
-			if (response.status === HttpStatusCode.Ok) {
-				localStorage.setItem["access_token"] = response.data.access_token;
-				localStorage.setItem["refresh_token"] = response.data.refresh_token;
-				const loginState = () => setLoggedInState(<Link to="/Logout">Logout</Link>);
-			}
-		})
-		.catch( function (error) {
-			console.error("Error: " + error);
-		});
-	  };
+  // couldn't get the async axios promise working correctly so a callback instead...
+  const callback = (response) => {
+    setBearer(response.data.access_token);
+    setRefresh(response.data.refresh_token);
+    setEmail(email);
+    setLoggedIn(true);
+    navigate("/Dashboard");
+  };
 
-	return (
-		<div className='container-md border border-primary rounded p-2 login'>
-			<h2>Please Login</h2>
-			<br />
-			<form onSubmit={handleLogin}>
-				<label className="form-label" >Email:</label>
-				<input type='text' 
-					placeholder='Email' 
-					className='form-control login_text' 
-					onChange={(e) => setEmail(e.target.value)}
-					autoComplete='email'
-					required />
-				<br />
+  const handleLogin = (event) => {
+    event.preventDefault();
+    doLogin(email, password, callback);
+  };
 
-				<label className="form-label">Password:</label>
-				<input type='password' 
-					placeholder='Password'
-					className='form-control login_text'
-					onChange={(e) => setPassword(e.target.value)}
-					autoComplete='current-password'
-					required />
-				<br />
+  return (
+    <div className="container-md border border-primary rounded p-2 login">
+      <h2>Please Login</h2>
+      <br />
+      <form onSubmit={handleLogin}>
+        <label className="form-label">Email:</label>
+        <input
+          type="text"
+          placeholder="Email"
+          className="form-control login_text"
+          onChange={(e) => updateEmail(e.target.value)}
+          autoComplete="email"
+          required
+        />
+        <br />
 
-				<button type='submit' className='btn btn-primary mb-3'>Login</button>
-			</form>
+        <label className="form-label">Password:</label>
+        <input
+          type="password"
+          placeholder="Password"
+          className="form-control login_text"
+          onChange={(e) => updatePassword(e.target.value)}
+          autoComplete="current-password"
+          required
+        />
+        <br />
 
-			<div>Need an account: <Link to="/Register">Register</Link></div>
-		</div>	
-	);
-}
+        <button type="submit" className="btn btn-primary mb-3">
+          Login
+        </button>
+      </form>
+
+      <div>
+        Need an account: <Link to="/Register">Register</Link>
+      </div>
+    </div>
+  );
+};
 
 export default Login;

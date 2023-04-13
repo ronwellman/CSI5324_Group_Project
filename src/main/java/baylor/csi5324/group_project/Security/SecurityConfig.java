@@ -37,10 +37,13 @@ public class SecurityConfig {
         http
                 .csrf()
                 .disable()
+                .cors().and()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/login").permitAll()
+                .requestMatchers("/api/logout").permitAll()
                 .requestMatchers("/api/new_user").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
+                .requestMatchers("/console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

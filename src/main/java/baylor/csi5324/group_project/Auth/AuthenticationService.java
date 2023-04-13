@@ -66,6 +66,7 @@ public class AuthenticationService {
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
+        System.out.println("user: " + user.getFirstName() + " jwtToken: " + jwtToken);
 
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()

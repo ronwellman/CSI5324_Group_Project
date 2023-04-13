@@ -1,11 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 const URL = "http://localhost";
 const PORT = 8080;
 
 axios.defaults.baseURL = URL + ":" + PORT;
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-
+axios.defaults.headers.common["Content-Type"] = "application/json";
+axios.defaults.headers.common["Access-Control-Allow-Origin"] =
+  "http://localhost:3000";
 
 const instance = axios.create();
 

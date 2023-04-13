@@ -1,22 +1,25 @@
-import React from "react";
-import axios, { HttpStatusCode } from 'axios';
-import { Link } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '../styles/styles.css'
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/styles.css";
+import doLogout from "../api/Logout";
+import { GlobalContext } from "../context/GlobalState";
 
 const Logout = (setLoggedInState) => {
+  const navigate = useNavigate();
 
-	axios.get('/api/logout', {"bearer": localStorage.getItem["access_token"]})
-	.then( (response) => {
-		if (response.status === HttpStatusCode.Ok) {
-			localStorage.setItem["access_token"] = response.data.access_token;
-			localStorage.setItem["refresh_token"] = response.data.refresh_token;
-			const loginState = () => setLoggedInState(false);
-		}
-	})
-	.catch( function (error) {
-		console.error("Error: " + error);
-	});
-}
+  const { setEmail, setLoggedIn, setBearer, setRefresh, access_token } =
+    useContext(GlobalContext);
+
+  const callback = () => {
+    setEmail(null);
+    setLoggedIn(false);
+    setBearer(null);
+    setRefresh(null);
+    navigate("/");
+  };
+
+  doLogout(callback, access_token);
+};
 
 export default Logout;

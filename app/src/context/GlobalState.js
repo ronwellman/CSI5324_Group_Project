@@ -1,8 +1,3 @@
-import React from "react";
+import { createContext } from "react";
 
-const initialState = {
-	user: null
-}
-
-export const GlobalContext = createContext(initialState);
-
+export const GlobalContext = createContext();
