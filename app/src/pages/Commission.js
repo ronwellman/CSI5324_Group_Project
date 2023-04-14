@@ -7,7 +7,10 @@ import doCreateCommission from "../api/Commission";
 
 const FreelancePost = () => {
   const navigate = useNavigate();
-  const { userId, access_token } = useContext(GlobalContext);
+  const { userId, access_token, loggedIn } = useContext(GlobalContext);
+  if (!loggedIn) {
+    navigate("/login");
+  }
 
   const callback = () => {
     navigate("/dashboard");

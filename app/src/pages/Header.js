@@ -50,7 +50,7 @@ const Header = () => {
     }
   };
 
-  console.log("Logged in state: " + loggedIn);
+  // console.log("Logged in state: " + loggedIn);
 
   const [banner, setBanner] = useState(
     <>

@@ -8,7 +8,10 @@ import Select from "react-select";
 
 const FreelancePost = () => {
   const navigate = useNavigate();
-  const { userId, access_token } = useContext(GlobalContext);
+  const { userId, access_token, loggedIn } = useContext(GlobalContext);
+  if (!loggedIn) {
+    navigate("/login");
+  }
 
   const callback = () => {
     navigate("/dashboard");
@@ -16,7 +19,6 @@ const FreelancePost = () => {
 
   const listingTitleRef = useRef();
   const descriptionRef = useRef();
-  // const compensationTypeRef = useRef();
   const compensationAmountRef = useRef();
 
   const [checked, setChecked] = useState(true);
