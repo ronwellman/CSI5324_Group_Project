@@ -11,6 +11,7 @@ import baylor.csi5324.group_project.Service.Impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.*;
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@ExtendWith(MockitoExtension.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("test")
 public class FreelancePostingTests {
 
     private UserRepository userRepository;

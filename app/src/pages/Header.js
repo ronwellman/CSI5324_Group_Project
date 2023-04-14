@@ -50,8 +50,6 @@ const Header = () => {
     }
   };
 
-  // console.log("Logged in state: " + loggedIn);
-
   const [banner, setBanner] = useState(
     <>
       <div className="col">
@@ -68,7 +66,7 @@ const Header = () => {
       <div className="container-fluid">
         <div className="row banner">
           <div className="col-4">
-            <div className="logo">Task Hiring Service</div>
+            <div className="logo">THS</div>
           </div>
           {banner}
         </div>

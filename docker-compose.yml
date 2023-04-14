@@ -40,3 +40,6 @@ networks:
 volumes:
   postgres:
   pgadmin:
+
+env_file:
+  - .env
