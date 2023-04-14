@@ -1,7 +1,17 @@
 import React, { useRef } from "react";
-import api from "../api/axiosConfig";
+// import api from "../api/axiosConfig";
+import { useNavigate } from "react-router-dom";
+import doRegister from "../api/Register";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/styles.css";
 
 const Register = () => {
+  const navigate = useNavigate();
+
+  const callback = () => {
+    navigate("/Login");
+  };
+
   const firstNameRef = useRef();
   const lastNameRef = useRef();
   const streetRef = useRef();
@@ -36,17 +46,7 @@ const Register = () => {
       password,
     };
 
-    try {
-      await api
-        .post("/api/new_user", JSON.stringify(newUser), {
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
-    } catch (err) {
-      console.log(err);
-    }
+    doRegister(newUser, callback);
   };
 
   return (

@@ -8,7 +8,7 @@ import doLogin from "../api/Login";
 const Login = () => {
   const navigate = useNavigate();
 
-  const { setEmail, setLoggedIn, setBearer, setRefresh } =
+  const { setEmail, setLoggedIn, setBearer, setRefresh, setUserId } =
     useContext(GlobalContext);
 
   const [email, updateEmail] = useState("");
@@ -18,6 +18,7 @@ const Login = () => {
   const callback = (response) => {
     setBearer(response.data.access_token);
     setRefresh(response.data.refresh_token);
+    setUserId(response.data.userId);
     setEmail(email);
     setLoggedIn(true);
     navigate("/Dashboard");

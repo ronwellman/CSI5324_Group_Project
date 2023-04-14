@@ -25,6 +25,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [access_token, setBearer] = useState(null);
   const [refresh_token, setRefresh] = useState(null);
+  const [userId, setUserId] = useState(0);
 
   const initialState = {
     email: email,
@@ -35,6 +36,8 @@ export default function App() {
     setBearer,
     refresh_token: refresh_token,
     setRefresh,
+    userId: userId,
+    setUserId,
   };
 
   return (

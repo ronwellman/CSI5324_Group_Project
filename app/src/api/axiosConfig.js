@@ -1,14 +1,11 @@
 import axios from "axios";
 
-const URL = "http://localhost";
-const PORT = 8080;
-
-axios.defaults.baseURL = URL + ":" + PORT;
+axios.defaults.baseURL = "http://localhost:8080/";
 axios.defaults.headers.common["Content-Type"] = "application/json";
 axios.defaults.headers.common["Access-Control-Allow-Origin"] =
   "http://localhost:3000";
 
-const instance = axios.create();
+const api = axios.create();
 
 // const new_user = axios.create({
 // 	baseURL: "/api/new_user"
@@ -102,4 +99,4 @@ const instance = axios.create();
 // 	baseURL: "/api/new_user"
 // });
 
-export default instance;
+export default api;

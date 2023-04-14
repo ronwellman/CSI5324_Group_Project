@@ -6,7 +6,7 @@ import "../styles/styles.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const { email, loggedIn } = useContext(GlobalContext);
+  const { email, userId, loggedIn } = useContext(GlobalContext);
   if (!loggedIn) {
     navigate("/login");
   }

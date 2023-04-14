@@ -72,6 +72,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
+                .userId(user.getId())
                 .build();
     }
 
@@ -128,6 +129,7 @@ public class AuthenticationService {
                 var authResponse = AuthenticationResponse.builder()
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
+                        .userId(user.getId())
                         .build();
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }

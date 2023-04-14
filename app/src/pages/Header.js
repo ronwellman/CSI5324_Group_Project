@@ -18,7 +18,7 @@ const Header = () => {
   const bannerUpdate = (loggedIn) => {
     if (loggedIn) {
       setBanner(
-        <div className="row align-items-end">
+        <>
           <div className="col">
             <Link to="/">Home</Link>
           </div>
@@ -34,15 +34,18 @@ const Header = () => {
           <div className="col">
             <Link to="/logout">Logout</Link>
           </div>
-        </div>
+        </>
       );
     } else {
       setBanner(
-        <div className="row align-items-end">
+        <>
+          <div className="col">
+            <Link to="/register">Register</Link>
+          </div>
           <div className="col">
             <Link to="/login">Login</Link>
           </div>
-        </div>
+        </>
       );
     }
   };
@@ -50,22 +53,26 @@ const Header = () => {
   console.log("Logged in state: " + loggedIn);
 
   const [banner, setBanner] = useState(
-    <div className="row align-items-end">
-      <div className="col-md-auto">
+    <>
+      <div className="col">
+        <Link to="/register">Register</Link>
+      </div>
+      <div className="col">
         <Link to="/login">Login</Link>
       </div>
-    </div>
+    </>
   );
 
   return (
     <>
-      <div className="row banner">
-        <div className="col">
-          <div className="logo">Task Hiring Service</div>
+      <div className="container-fluid">
+        <div className="row banner">
+          <div className="col-4">
+            <div className="logo">Task Hiring Service</div>
+          </div>
+          {banner}
         </div>
-        {banner}
       </div>
-
       <Outlet />
     </>
   );
