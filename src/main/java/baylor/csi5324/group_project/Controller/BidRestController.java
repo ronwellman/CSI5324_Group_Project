@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST}, allowCredentials = "true")
 public class BidRestController {
 
     private final BidService bidService;

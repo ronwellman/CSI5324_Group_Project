@@ -26,6 +26,7 @@ public class MessageTests {
     @Order(3)
     void createMessage() throws UserException {
         User user1 = new User();
+        user1.setPassword("password");
         user1.setFirstName("Albert");
         user1.setLastName("Slater");
         user1.setStreet("123 Bayside Dr");
@@ -35,9 +36,10 @@ public class MessageTests {
         user1.setPhone("123-456-7890");
         user1.setZip("90210");
 
-        User savedUser1 = userService.save(user1);
+        User savedUser1 = userService.newUser(user1);
 
         User user2 = new User();
+        user2.setPassword("password");
         user2.setFirstName("Zack");
         user2.setLastName("Morris");
         user2.setStreet("123 Bayside Dr");
@@ -47,7 +49,7 @@ public class MessageTests {
         user2.setPhone("123-456-7890");
         user2.setZip("90210");
 
-        User savedUser2 = userService.save(user2);
+        User savedUser2 = userService.newUser(user2);
 
         Message message = new Message();
         message.setMessage("Meet me at the Pizza Palace at 4pm");

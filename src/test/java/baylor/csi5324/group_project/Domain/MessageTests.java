@@ -26,6 +26,7 @@ public class MessageTests {
     @BeforeEach
     void setup() {
         user1 = new User();
+        user1.setPassword("password");
         user1.setFirstName("Albert");
         user1.setLastName("Slater");
         user1.setStreet("123 Bayside Dr");
@@ -36,6 +37,7 @@ public class MessageTests {
         user1.setZip("90210");
 
         user2 = new User();
+        user2.setPassword("password");
         user2.setFirstName("Zack");
         user2.setLastName("Morris");
         user2.setStreet("123 Bayside Dr");

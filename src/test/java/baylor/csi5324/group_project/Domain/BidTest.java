@@ -30,6 +30,7 @@ class BidTest {
         testCommission = new Commission();
 
         testUser.setCity("Test City");
+        testUser.setPassword("password");
         testUser.setEmail("TestEmail@Email.com");
         testUser.setFirstName("TestName");
         testUser.setLastName("TestLastName");

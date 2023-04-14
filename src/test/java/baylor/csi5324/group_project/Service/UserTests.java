@@ -21,6 +21,7 @@ public class UserTests {
     @Order(1)
     void createNewUser() {
         User user = new User();
+        user.setPassword("password");
         user.setFirstName("Albert");
         user.setLastName("Slater");
         user.setStreet("123 Bayside Dr");

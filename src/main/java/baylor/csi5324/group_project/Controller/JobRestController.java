@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST}, allowCredentials = "true")
 public class JobRestController {
 
     private final JobService jobService;

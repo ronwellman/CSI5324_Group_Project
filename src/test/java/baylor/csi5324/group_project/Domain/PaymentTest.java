@@ -45,6 +45,7 @@ class PaymentTest {
         job.setStartDate(LocalDateTime.parse("2023-02-20T00:00:00"));
         job.setEndDate(LocalDateTime.parse("2023-02-28T00:00:00"));
 
+        freelancer.setPassword("password");
         freelancer.setFirstName("John");
         freelancer.setLastName("Doe");
         freelancer.setStreet("Main Street");
@@ -55,6 +56,7 @@ class PaymentTest {
         freelancer.setPhone("123-456-7899");
 
         consumer = new User();
+        consumer.setPassword("password");
         consumer.setFirstName("Zack");
         consumer.setLastName("Morris");
         consumer.setStreet("123 Bayside Dr");

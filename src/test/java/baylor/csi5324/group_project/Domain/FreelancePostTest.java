@@ -27,6 +27,7 @@ public class FreelancePostTest {
     @BeforeEach
     void setup() {
         user = new User();
+        user.setPassword("password");
         user.setFirstName("Albert");
         user.setLastName("Slater");
         user.setStreet("123 Bayside Dr");
