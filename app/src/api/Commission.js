@@ -12,3 +12,10 @@ const doGetCommissions = (access_token, callback) => {
 };
 
 export { doGetCommissions };
+
+const doGetMyCommissions = (userId, access_token, callback) => {
+  const url = "/api/commissions_by_user?id=" + userId;
+  return genericGet(url, access_token, callback);
+};
+
+export { doGetMyCommissions };

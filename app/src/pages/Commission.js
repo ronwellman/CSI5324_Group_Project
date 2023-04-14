@@ -84,7 +84,7 @@ const FreelancePost = () => {
         </label>
         <input
           type="text"
-          placeholder="dead;ome"
+          placeholder="deadline"
           className="form-control login_text"
           ref={deadlineRef}
         />

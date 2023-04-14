@@ -3,9 +3,10 @@ import { GlobalContext } from "../context/GlobalState";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/styles.css";
-import { doGetCommissions } from "../api/Commission";
+import { doGetCommissions, doGetMyCommissions } from "../api/Commission";
 import { doGetFreelancePosts } from "../api/FreelancePost";
 import doHireFreelancer from "../api/HireFreelancer";
+import { doAcceptBid } from "../api/Bid";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,16 +18,34 @@ const Dashboard = () => {
 
   const [myPosts, setMyPosts] = useState([]);
   const [myCommissions, setMyCommissions] = useState([]);
+  const [myCommissionBids, setMyCommissionBids] = useState([]);
   const [myBids, setMyBids] = useState([]);
   const [activePosts, setActivePosts] = useState([]);
   const [commissions, setCommissions] = useState([]);
+
+  ///////////////////////////////////////////
+  // Callbacks
+  ///////////////////////////////////////////
 
   const myPostsCallback = (response) => {
     console.log(response.data);
   };
 
   const myCommissionsCallback = (response) => {
-    console.log(response.data);
+    setMyCommissions(response.data);
+    // this only spiratically works
+    var bids = [];
+    console.log("before");
+    for (var commission of myCommissions) {
+      console.log("l1");
+      for (var bid of commission.bids) {
+        console.log("yep");
+        bid["commissionId"] = commission.id;
+        bids.push(bid);
+      }
+    }
+    console.log("updating");
+    setMyCommissionBids(bids);
   };
 
   const myBidsCallback = (response) => {
@@ -55,6 +74,16 @@ const Dashboard = () => {
     doHireFreelancer(data, access_token, hireCallback);
   };
 
+  const acceptBid = (e, bidId) => {
+    e.preventDefault();
+
+    doAcceptBid(bidId, access_token, hireCallback);
+  };
+
+  ///////////////////////////////////////////
+  // Effects
+  ///////////////////////////////////////////
+
   // useEffect(() => {
   //   doGetCommissions(access_token, commissionsCallback);
   // }, []);
@@ -69,6 +98,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     doGetCommissions(access_token, commissionsCallback);
+  }, []);
+
+  useEffect(() => {
+    doGetMyCommissions(userId, access_token, myCommissionsCallback);
   }, []);
 
   return (
@@ -107,29 +140,53 @@ const Dashboard = () => {
         <thead>
           <tr>
             <th>ID</th>
-            <th>Payee</th>
-            <th>Memo</th>
-            <th>Account</th>
-            <th>Amount</th>
+            <th>Title</th>
+            <th>Budget</th>
+            <th>Deadline</th>
           </tr>
         </thead>
-        {/* <tbody>
-          {expenses.map((expense) => (
-            <tr key={expense.id}>
-              <td>{expense.id}</td>
-              <td>{expense.payee}</td>
-              <td>{expense.memo}</td>
-              <td>{expense.account}</td>
-              <td>{expense.amount}</td>
+        <tbody>
+          {myCommissions.map((commission) => (
+            <tr key={commission.id}>
+              <td>{commission.id}</td>
+              <td>{commission.listingTitle}</td>
+              <td>{commission.budget}</td>
+              <td>{commission.deadline}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h2>Bids</h2>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>commissionId</th>
+            <th>Comp Type</th>
+            <th>Comp Amt</th>
+            <th>Accept</th>
+          </tr>
+        </thead>
+        <tbody>
+          {myCommissionBids.map((bid) => (
+            <tr key={bid.id}>
+              <td>{bid.id}</td>
+              <td>{bid.commissionId}</td>
+              <td>{bid.compensationType}</td>
+              <td>{bid.compensationAmount}</td>
               <td>
-                <ButtonGroup>
-                  <Button className="btn-expense" variant="primary" >Edit</Button>
-                  <Button className="btn-expense" variant="warning" >Delete</Button>
-                </ButtonGroup>
+                <a
+                  onClick={(e) => acceptBid(e, bid.id)}
+                  href="/accept_bid"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Accept
+                </a>
               </td>
             </tr>
           ))}
-        </tbody> */}
+        </tbody>
       </table>
       <h2>Active Posts</h2>
       <table className="table">
@@ -150,9 +207,6 @@ const Dashboard = () => {
               <td>{activePost.compensationType}</td>
               <td>{activePost.compensationAmount}</td>
               <td>
-                {/* <Link to={"/hire"} state={{ freelancePostId: activePost.id }}>
-                  Hire
-                </Link> */}
                 <a
                   onClick={(e) => hireFreelancer(e, activePost.id)}
                   href="/hire"
