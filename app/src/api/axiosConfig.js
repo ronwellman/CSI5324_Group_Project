@@ -1,9 +1,8 @@
 import axios from "axios";
 
 axios.defaults.baseURL = "http://localhost:8080/";
+// axios.defaults.baseURL = "http://csi5324.lostinsauce.tech:8080/";
 axios.defaults.headers.common["Content-Type"] = "application/json";
-axios.defaults.headers.common["Access-Control-Allow-Origin"] =
-  "http://localhost:3000";
 
 const api = axios.create();
 
