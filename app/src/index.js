@@ -11,6 +11,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Logout from "./pages/Logout";
 import Bid from "./pages/Bid";
+import Bids from "./pages/Bids";
 import Commission from "./pages/Commission";
 import FreelancePost from "./pages/FreelancePost";
 import Job from "./pages/Job";
@@ -53,6 +54,7 @@ export default function App() {
             <Route path="freelancePost" element={<FreelancePost />} />
             <Route path="commission" element={<Commission />} />
             <Route path="bid" element={<Bid />} />
+            <Route path="bids" element={<Bids />} />
             <Route path="Job" element={<Job />} />
             <Route path="Review" element={<Review />} />
             <Route path="Message" element={<Message />} />
