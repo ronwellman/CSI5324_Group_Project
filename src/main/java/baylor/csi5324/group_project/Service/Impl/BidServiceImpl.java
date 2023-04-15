@@ -45,6 +45,10 @@ public class BidServiceImpl implements BidService {
         User user = tmpUser.get();
         Commission commission = tmpCommission.get();
 
+        if (user.equals(commission.getUser())) {
+            throw new CommissionException("freelancer and consumer cannot be the same person");
+        }
+
         Bid bid = new Bid();
         bid.setCompensationType(dto.compensationType);
         bid.setCompensationAmount(dto.compensationAmount);

@@ -54,6 +54,10 @@ public class JobServiceImpl implements JobService {
         }
 
         User consumer = tmpConsumer.get();
+
+        if (consumer.equals(freelancer)) {
+            throw new FreelancePostException("freelancer and consumer cannot be the same person");
+        }
         Job job = new Job();
         job.setFreelancePost(freelancePost);
 
@@ -93,6 +97,10 @@ public class JobServiceImpl implements JobService {
         CompensationType compensationType = bid.getCompensationType();
         BigDecimal compensationAmount = bid.getCompensationAmount();
         User consumer = commission.getUser();
+
+        if (consumer.equals(freelancer)) {
+            throw new BidException("freelancer and consumer cannot be the same person");
+        }
 
         Job job = new Job();
         job.setCommission(commission);
