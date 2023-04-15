@@ -20,9 +20,7 @@ npx create-react-app@5 app
 ```bash
 cd app
 npm i bootstrap@5 react-cookie@4 react-router-dom@6 reactstrap@9
-```
-
-```bash
+npm i --save react-select
 npm install --save-dev @babel/preset-react
 ```
 
