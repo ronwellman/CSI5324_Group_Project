@@ -71,7 +71,7 @@ const Bid = () => {
 
   return (
     <div className="container-md border border-primary rounded p-2 login">
-      <h2>Create a Freelance Post</h2>
+      <h2>Create a Bid</h2>
       <br />
       <form onSubmit={onSubmit}>
         <label className="form-label" htmlFor="compensationType">
