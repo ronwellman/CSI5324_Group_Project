@@ -1,0 +1,61 @@
+#
+# Code adapted from: https://github.com/ali-bouali/spring-boot-3-jwt-security
+#
+version: '2'
+
+services:
+  app:
+    image: 'task_hiring:latest'
+    build:
+      context: .
+    container_name: app
+    environment:
+      POSTGRESSUSERNAME: SomeUsernameThatsCool
+      POSTGRESSPASSWORD: SecretPasswordsAreBetterThanNothing       
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres-sql
+    image: postgres
+    environment:
+      POSTGRES_USER: SomeUsernameThatsCool
+      POSTGRES_PASSWORD: SecretPasswordsAreBetterThanNothing
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+
+

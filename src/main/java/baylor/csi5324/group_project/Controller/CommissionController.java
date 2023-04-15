@@ -14,7 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 @Controller
 @RequestMapping("/commissions")
 @SessionAttributes("commissionRequest")
-@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST}, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST})
 public class CommissionController {
 
     private CommissionRepository commissionRepository;

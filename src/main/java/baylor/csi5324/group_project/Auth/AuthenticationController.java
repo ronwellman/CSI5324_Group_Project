@@ -16,17 +16,10 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST}, allowCredentials = "true")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.OPTIONS, RequestMethod.POST})
 public class AuthenticationController {
 
     private final AuthenticationService authService;
-
-//    @PostMapping("/register")
-//    public ResponseEntity<AuthenticationResponse> register(
-//            @RequestBody RegisterRequest request
-//    ) {
-//        return ResponseEntity.ok(service.register(request));
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
@@ -42,12 +35,5 @@ public class AuthenticationController {
     ) throws IOException {
         authService.refreshToken(request, response);
     }
-
-//    @GetMapping("/logout")
-//    public ResponseEntity<AuthenticationResponse> authenticate(@AuthenticationPrincipal User user) {
-//        System.out.println(user);
-//        authService.revokeAllUserTokens(user);
-//        return new ResponseEntity(null, HttpStatus.OK);
-//    }
 
 }

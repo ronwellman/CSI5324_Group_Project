@@ -1,4 +1,7 @@
 package baylor.csi5324.group_project.Auth;
+/**
+ * Code adapted from: https://github.com/ali-bouali/spring-boot-3-jwt-security
+ */
 
 import baylor.csi5324.group_project.Domain.Token;
 import baylor.csi5324.group_project.Domain.TokenType;
@@ -32,24 +35,6 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-//    public AuthenticationResponse register(RegisterRequest request) {
-//        var user = User.builder()
-//                .firstname(request.getFirstname())
-//                .lastname(request.getLastname())
-//                .email(request.getEmail())
-//                .password(passwordEncoder.encode(request.getPassword()))
-//                .role(Role.USER)
-//                .build();
-//        var savedUser = repository.save(user);
-//        var jwtToken = jwtService.generateToken(user);
-//        var refreshToken = jwtService.generateRefreshToken(user);
-//        saveUserToken(savedUser, jwtToken);
-//        return AuthenticationResponse.builder()
-//                .accessToken(jwtToken)
-//                .refreshToken(refreshToken)
-//                .build();
-//    }
 
     public AuthenticationResponse authenticate(UserDTO dto) {
         authenticationManager.authenticate(
